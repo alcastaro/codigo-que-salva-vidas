@@ -1,0 +1,17 @@
+rasterio
+pystac
+pystac-client
+planetary-computer
+requests
+numpy
+pandas
+pyarrow
+scipy
+matplotlib
+google-genai
+nbformat
+python-pptx
+qrcode[pil]
+pymupdf
+fonttools
+geopandas

@@ -1,0 +1,14 @@
+CLAUDE.md
+.claude/
+.env
+.venv/
+__pycache__/
+.ipynb_checkpoints/
+.DS_Store
+*.tif
+scratch/
+datos_taller/
+deck/render/
+deck/fonts/var/
+deck/fondos/*.html
+deck/brand/examples/

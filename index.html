@@ -1,0 +1,112 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Código que salva vidas · Taller</title>
+<meta name="description" content="Taller de DevFest Santo Domingo 2026: Google Crisis Resilience con Colab y AI Studio.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Google+Sans:wght@400;500;700&family=Roboto+Mono:wght@300&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --negro: #1e1e1e; --blanco: #ffffff; --off: #f0f0f0;
+    --azul: #4285f4; --verde: #34a853; --amarillo: #f9ab00; --rojo: #ea4335;
+    --h-azul: #57caff; --h-verde: #5cdb6d; --h-amarillo: #ffd427; --h-rojo: #ff7daf;
+    --p-azul: #c3ecf6; --p-verde: #ccf6c5; --p-amarillo: #ffe7a5; --p-rojo: #f8d8d8;
+    --sans: "Google Sans", system-ui, sans-serif; --mono: "Roboto Mono", ui-monospace, monospace;
+  }
+  * { box-sizing: border-box; }
+  body { margin: 0; background: var(--off); color: var(--negro); font-family: var(--sans); line-height: 1.4; }
+  main { max-width: 1040px; margin: 0 auto; padding: 24px 16px 48px; }
+  .tarjeta { background: var(--blanco); border: 2px solid var(--negro); border-radius: 28px; padding: 32px; }
+  .badge { display: inline-flex; gap: 10px; align-items: center; font-family: var(--mono); font-weight: 300;
+           font-size: 15px; border: 2px solid var(--negro); border-radius: 999px; padding: 6px 18px; background: var(--blanco); }
+  h1 { font-size: clamp(40px, 8vw, 72px); line-height: .95; margin: 20px 0 12px; font-weight: 700; }
+  .sub { font-family: var(--mono); font-weight: 300; font-size: 17px; margin: 0; }
+  .lead { font-size: 20px; max-width: 46ch; margin: 20px 0 0; }
+  h2 { font-size: 28px; margin: 40px 0 16px; font-weight: 700; }
+  .pistas { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px; }
+  .pista { border: 2px solid var(--negro); border-radius: 24px; padding: 24px; display: flex; flex-direction: column; gap: 12px; }
+  .pista.a { background: var(--p-azul); } .pista.b { background: var(--p-verde); } .pista.c { background: var(--p-rojo); }
+  .etq { align-self: flex-start; border: 2px solid var(--negro); border-radius: 999px; padding: 6px 18px; font-weight: 500; font-size: 15px; }
+  .a .etq { background: var(--h-azul); } .b .etq { background: var(--h-verde); } .c .etq { background: var(--h-rojo); }
+  .pista h3 { margin: 0; font-size: 26px; }
+  .pista ul { margin: 0; padding-left: 20px; }
+  .pista .donde { font-family: var(--mono); font-weight: 300; font-size: 14px; }
+  .boton { margin-top: auto; display: block; text-align: center; text-decoration: none; color: var(--negro);
+           background: var(--blanco); border: 2px solid var(--negro); border-radius: 999px; padding: 12px 18px; font-weight: 500; font-size: 17px; }
+  .boton:hover, .boton:focus-visible { background: var(--negro); color: var(--blanco); outline: none; }
+  ol.pasos { padding-left: 22px; font-size: 18px; } ol.pasos li { margin-bottom: 8px; }
+  code { font-family: var(--mono); background: var(--off); border-radius: 6px; padding: 1px 6px; }
+  .aviso { border: 2px solid var(--negro); border-radius: 18px; background: var(--p-amarillo); padding: 16px 20px; font-size: 16px; }
+  footer { font-family: var(--mono); font-weight: 300; font-size: 13px; margin-top: 40px; }
+  a { color: var(--negro); }
+  @media (max-width: 520px) { .tarjeta { padding: 22px; } .lead { font-size: 18px; } }
+</style>
+</head>
+<body>
+<main>
+  <section class="tarjeta">
+    <span class="badge">Workshops @DevFest · Laboratorio</span>
+    <h1>Código que salva vidas</h1>
+    <p class="sub">Entendiendo Google Crisis Resilience · DevFest Santo Domingo 2026</p>
+    <p class="lead">Elige una pista. Las tres siguen al huracán Melissa (Jamaica, octubre de 2025), desde el pronóstico hasta la alerta. No necesitas saber programar ni crear un proyecto en la nube: solo una cuenta de Google.</p>
+  </section>
+
+  <h2>Antes de empezar (2 minutos)</h2>
+  <ol class="pasos">
+    <li>Saca tu API key gratuita de Gemini en <a href="https://aistudio.google.com/apikey">aistudio.google.com/apikey</a>.</li>
+    <li>En Colab, abre la <strong>llave 🔑 (Secretos)</strong>, crea <code>GOOGLE_API_KEY</code> con tu key y activa <em>Notebook access</em>.</li>
+    <li><strong>Nunca</strong> pegues la key dentro de una celda.</li>
+  </ol>
+
+  <h2>Elige tu pista</h2>
+  <div class="pistas">
+    <article class="pista a">
+      <span class="etq">A · Huracán</span>
+      <h3>De 50 futuros posibles a una alerta</h3>
+      <ul>
+        <li>Weather Lab (DeepMind): 50 escenarios</li>
+        <li>Probabilidad de que te toque</li>
+        <li>Flood Hub: ríos en alerta</li>
+        <li>Gemini y Gemma redactan la alerta</li>
+      </ul>
+      <p class="donde">Google Colab · laptop · 20 min</p>
+      <a class="boton" href="https://colab.research.google.com/github/alcastaro/codigo-que-salva-vidas/blob/main/taller/pista_A_huracan.ipynb">Abrir en Colab</a>
+    </article>
+    <article class="pista b">
+      <span class="etq">B · Satélite</span>
+      <h3>Qué pasó y a quién le pasó</h3>
+      <ul>
+        <li>Buscar imágenes Sentinel con STAC</li>
+        <li>El radar ve el agua a través de nubes</li>
+        <li>AlphaEarth: buscar lugares parecidos</li>
+        <li>Tu propio lugar, 2017 contra 2025</li>
+      </ul>
+      <p class="donde">Google Colab · laptop · 20 min</p>
+      <a class="boton" href="https://colab.research.google.com/github/alcastaro/codigo-que-salva-vidas/blob/main/taller/pista_B_satelite.ipynb">Abrir en Colab</a>
+    </article>
+    <article class="pista c">
+      <span class="etq">C · Alerta</span>
+      <h3>Un mensaje que se entiende en 3 segundos</h3>
+      <ul>
+        <li>Instrucciones de sistema en AI Studio</li>
+        <li>Formato estándar de alertas (CAP)</li>
+        <li>Gemma: la misma tarea sin internet</li>
+        <li>Build: crea tu propia app</li>
+      </ul>
+      <p class="donde">AI Studio · sirve desde el teléfono · 20 min</p>
+      <a class="boton" href="https://github.com/alcastaro/codigo-que-salva-vidas/blob/main/taller/pista_C_ai_studio.md">Abrir la guía</a>
+    </article>
+  </div>
+
+  <h2>Una advertencia</h2>
+  <p class="aviso">Esto es una práctica con datos reales de investigación. Una alerta de verdad la emite una autoridad, la revisa una persona y se prueba con la comunidad. Para alertas reales, consulta siempre a tu servicio meteorológico nacional.</p>
+
+  <footer>
+    Datos: Google DeepMind Weather Lab (CC BY 4.0) · NOAA/NHC · Google Flood Forecasting API · Copernicus Sentinel (ESA) vía Earth Search y Microsoft Planetary Computer · AlphaEarth Foundations (CC BY 4.0) vía Source Cooperative · Natural Earth.<br>
+    Alberto Castillo Aroca · GDG Santo Domingo · <a href="https://github.com/alcastaro/codigo-que-salva-vidas">código en GitHub</a>
+  </footer>
+</main>
+</body>
+</html>

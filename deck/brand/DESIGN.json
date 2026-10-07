@@ -1,0 +1,705 @@
+{
+  "name": "DevFest Santo Domingo",
+  "version": "2026",
+  "tagline": "Donde los developers construyen el futuro.",
+  "colors": {
+    "primary": "#4285f4",
+    "background": "#f0f0f0",
+    "surface": "#ffffff",
+    "text": "#1e1e1e",
+    "on-dark": "#ffffff",
+    "blue-500": "#4285f4",
+    "green-500": "#34a853",
+    "yellow-600": "#f9ab00",
+    "red-500": "#ea4335",
+    "halftone-blue": "#57caff",
+    "halftone-green": "#5cdb6d",
+    "halftone-yellow": "#ffd427",
+    "halftone-red": "#ff7daf",
+    "pastel-blue": "#c3ecf6",
+    "pastel-green": "#ccf6c5",
+    "pastel-yellow": "#ffe7a5",
+    "pastel-red": "#f8d8d8"
+  },
+  "print": {
+    "blue-500": {
+      "cmyk": "88 45 0 0",
+      "pantone": "2195 U"
+    },
+    "green-500": {
+      "cmyk": "76 0 87 0",
+      "pantone": "2257 C"
+    },
+    "yellow-600": {
+      "cmyk": "0 25 100 0",
+      "pantone": "129 C"
+    },
+    "red-500": {
+      "cmyk": "0 90 88 0",
+      "pantone": "032 U"
+    },
+    "halftone-blue": {
+      "cmyk": "67 8 0 0",
+      "pantone": "2190 C"
+    },
+    "halftone-green": {
+      "cmyk": "30 0 66 0",
+      "pantone": "2283 C"
+    },
+    "halftone-yellow": {
+      "cmyk": "0 7 100 0",
+      "pantone": "115 C"
+    },
+    "halftone-red": {
+      "cmyk": "1 48 0 0",
+      "pantone": "2037 C"
+    },
+    "pastel-blue": {
+      "cmyk": "28 0 1 0",
+      "pantone": "635 C"
+    },
+    "pastel-green": {
+      "cmyk": "15 0 15 0",
+      "pantone": "2253 C"
+    },
+    "pastel-yellow": {
+      "cmyk": "0 3 40 0",
+      "pantone": "7401 C"
+    },
+    "pastel-red": {
+      "cmyk": "1 14 3 0",
+      "pantone": "698 C"
+    },
+    "background": {
+      "cmyk": "6 4 4 2",
+      "note": "Off White. The guide gives no Pantone."
+    },
+    "text": {
+      "cmyk": "0 0 0 90",
+      "note": "Black 02. The guide gives no Pantone."
+    }
+  },
+  "combos": {
+    "off-white": {
+      "background": "{colors.background}",
+      "text": "{colors.text}",
+      "usage": "The default slide ground: charts, big numbers, anything without a colourway."
+    },
+    "card": {
+      "background": "{colors.surface}",
+      "text": "{colors.text}",
+      "usage": "The white notched card that holds titles, text and bullets."
+    },
+    "blue": {
+      "background": "{colors.pastel-blue}",
+      "mark": "{colors.blue-500}",
+      "text": "{colors.text}",
+      "usage": "Blue colourway — brackets and dots in Blue 500, cloud icon."
+    },
+    "green": {
+      "background": "{colors.pastel-green}",
+      "mark": "{colors.green-500}",
+      "text": "{colors.text}",
+      "usage": "Green colourway — brackets and dots in Green 500, globe icon."
+    },
+    "yellow": {
+      "background": "{colors.pastel-yellow}",
+      "mark": "{colors.yellow-600}",
+      "text": "{colors.text}",
+      "usage": "Yellow colourway — brackets and dots in Yellow 600, hash icon."
+    },
+    "red": {
+      "background": "{colors.pastel-red}",
+      "mark": "{colors.red-500}",
+      "text": "{colors.text}",
+      "usage": "Red colourway — brackets and dots in Red 500, asterisk icon."
+    },
+    "label-dark": {
+      "background": "{colors.text}",
+      "text": "{colors.on-dark}",
+      "usage": "Neutral chart pill (column labels, second-tier steps). The only white text in the system."
+    },
+    "chart-blue": {
+      "background": "{colors.pastel-blue}",
+      "mark": "{colors.halftone-blue}",
+      "text": "{colors.text}",
+      "usage": "Chart kit: a Halftone Blue label goes only on a Pastel Blue box."
+    },
+    "chart-green": {
+      "background": "{colors.pastel-green}",
+      "mark": "{colors.halftone-green}",
+      "text": "{colors.text}",
+      "usage": "Chart kit: a Halftone Green label goes only on a Pastel Green box."
+    },
+    "chart-yellow": {
+      "background": "{colors.pastel-yellow}",
+      "mark": "{colors.halftone-yellow}",
+      "text": "{colors.text}",
+      "usage": "Chart kit: a Halftone Yellow label goes only on a Pastel Yellow box."
+    },
+    "chart-red": {
+      "background": "{colors.pastel-red}",
+      "mark": "{colors.halftone-red}",
+      "text": "{colors.text}",
+      "usage": "Chart kit: a Halftone Red label goes only on a Pastel Red box."
+    }
+  },
+  "fonts": {
+    "sans": {
+      "name": "Google Sans",
+      "role": "Headlines (Bold), body (Regular), big numbers and chart labels (Medium)",
+      "proprietary": "false",
+      "licensed": "true",
+      "url": "https://fonts.google.com/specimen/Google+Sans"
+    },
+    "mono": {
+      "name": "Roboto Mono",
+      "role": "Subheads, speaker lines and sub-bullets (Light); section numbers (Thin); the year (ExtraLight)",
+      "proprietary": "false",
+      "licensed": "true",
+      "url": "https://fonts.google.com/specimen/Roboto+Mono"
+    }
+  },
+  "typography": {
+    "display": {
+      "fontFamily": "Google Sans",
+      "fontSize": "80px",
+      "fontWeight": "700",
+      "lineHeight": "0.9"
+    },
+    "h1": {
+      "fontFamily": "Google Sans",
+      "fontSize": "60px",
+      "fontWeight": "700",
+      "lineHeight": "0.9"
+    },
+    "h2": {
+      "fontFamily": "Google Sans",
+      "fontSize": "49px",
+      "fontWeight": "700",
+      "lineHeight": "1"
+    },
+    "h3": {
+      "fontFamily": "Google Sans",
+      "fontSize": "40px",
+      "fontWeight": "700",
+      "lineHeight": "1"
+    },
+    "body-lg": {
+      "fontFamily": "Google Sans",
+      "fontSize": "33px",
+      "fontWeight": "400",
+      "lineHeight": "1"
+    },
+    "body-md": {
+      "fontFamily": "Google Sans",
+      "fontSize": "27px",
+      "fontWeight": "400",
+      "lineHeight": "1.15"
+    },
+    "statement": {
+      "fontFamily": "Google Sans",
+      "fontSize": "39px",
+      "fontWeight": "400",
+      "lineHeight": "1"
+    },
+    "number-xl": {
+      "fontFamily": "Google Sans",
+      "fontSize": "147px",
+      "fontWeight": "500",
+      "lineHeight": "1"
+    },
+    "number-lg": {
+      "fontFamily": "Google Sans",
+      "fontSize": "127px",
+      "fontWeight": "500",
+      "lineHeight": "1"
+    },
+    "subhead": {
+      "fontFamily": "Roboto Mono",
+      "fontSize": "24px",
+      "fontWeight": "300",
+      "lineHeight": "1"
+    },
+    "subhead-sm": {
+      "fontFamily": "Roboto Mono",
+      "fontSize": "21px",
+      "fontWeight": "300",
+      "lineHeight": "1"
+    },
+    "section-number": {
+      "fontFamily": "Roboto Mono",
+      "fontSize": "81px",
+      "fontWeight": "100",
+      "lineHeight": "1"
+    },
+    "year": {
+      "fontFamily": "Roboto Mono",
+      "fontSize": "60px",
+      "fontWeight": "200",
+      "lineHeight": "1"
+    },
+    "caption": {
+      "fontFamily": "Google Sans",
+      "fontSize": "20px",
+      "fontWeight": "500",
+      "lineHeight": "1"
+    },
+    "label": {
+      "fontFamily": "Google Sans",
+      "fontSize": "19px",
+      "fontWeight": "500",
+      "lineHeight": "1"
+    },
+    "badge": {
+      "fontFamily": "Google Sans",
+      "fontSize": "11px",
+      "fontWeight": "400",
+      "lineHeight": "1"
+    }
+  },
+  "rounded": {
+    "sm": "12px",
+    "md": "14px",
+    "lg": "18px",
+    "xl": "24px",
+    "card": "28px",
+    "full": "9999px"
+  },
+  "spacing": {
+    "xs": "12px",
+    "sm": "16px",
+    "md": "20px",
+    "lg": "30px",
+    "xl": "38px",
+    "2xl": "48px"
+  },
+  "components": {
+    "card": {
+      "backgroundColor": "{colors.surface}",
+      "textColor": "{colors.text}",
+      "border": "2px solid {colors.text}",
+      "rounded": "{rounded.card}",
+      "padding": "48px",
+      "typography": "{typography.body-lg}",
+      "combo": "card"
+    },
+    "pill-kicker": {
+      "backgroundColor": "{colors.surface}",
+      "textColor": "{colors.text}",
+      "border": "2px solid {colors.text}",
+      "rounded": "{rounded.full}",
+      "padding": "18px 40px",
+      "typography": "{typography.body-lg}"
+    },
+    "badge": {
+      "backgroundColor": "{colors.surface}",
+      "textColor": "{colors.text}",
+      "border": "2px solid {colors.text}",
+      "rounded": "{rounded.full}",
+      "padding": "6px 22px",
+      "typography": "{typography.badge}"
+    },
+    "label-dark": {
+      "backgroundColor": "{colors.text}",
+      "textColor": "{colors.on-dark}",
+      "border": "2px solid {colors.text}",
+      "rounded": "{rounded.full}",
+      "padding": "10px 28px",
+      "typography": "{typography.label}",
+      "combo": "label-dark"
+    },
+    "label-blue": {
+      "backgroundColor": "{colors.halftone-blue}",
+      "textColor": "{colors.text}",
+      "border": "2px solid {colors.text}",
+      "rounded": "{rounded.full}",
+      "padding": "10px 28px",
+      "typography": "{typography.label}"
+    },
+    "label-green": {
+      "backgroundColor": "{colors.halftone-green}",
+      "textColor": "{colors.text}",
+      "border": "2px solid {colors.text}",
+      "rounded": "{rounded.full}",
+      "padding": "10px 28px",
+      "typography": "{typography.label}"
+    },
+    "label-yellow": {
+      "backgroundColor": "{colors.halftone-yellow}",
+      "textColor": "{colors.text}",
+      "border": "2px solid {colors.text}",
+      "rounded": "{rounded.full}",
+      "padding": "10px 28px",
+      "typography": "{typography.label}"
+    },
+    "label-red": {
+      "backgroundColor": "{colors.halftone-red}",
+      "textColor": "{colors.text}",
+      "border": "2px solid {colors.text}",
+      "rounded": "{rounded.full}",
+      "padding": "10px 28px",
+      "typography": "{typography.label}"
+    },
+    "box-blue": {
+      "backgroundColor": "{colors.pastel-blue}",
+      "textColor": "{colors.text}",
+      "border": "2px solid {colors.text}",
+      "rounded": "{rounded.sm}",
+      "padding": "20px 20px 20px 19px",
+      "typography": "{typography.caption}",
+      "combo": "chart-blue"
+    },
+    "box-green": {
+      "backgroundColor": "{colors.pastel-green}",
+      "textColor": "{colors.text}",
+      "border": "2px solid {colors.text}",
+      "rounded": "{rounded.sm}",
+      "padding": "20px 20px 20px 19px",
+      "typography": "{typography.caption}",
+      "combo": "chart-green"
+    },
+    "box-yellow": {
+      "backgroundColor": "{colors.pastel-yellow}",
+      "textColor": "{colors.text}",
+      "border": "2px solid {colors.text}",
+      "rounded": "{rounded.sm}",
+      "padding": "20px 20px 20px 19px",
+      "typography": "{typography.caption}",
+      "combo": "chart-yellow"
+    },
+    "box-red": {
+      "backgroundColor": "{colors.pastel-red}",
+      "textColor": "{colors.text}",
+      "border": "2px solid {colors.text}",
+      "rounded": "{rounded.sm}",
+      "padding": "20px 20px 20px 19px",
+      "typography": "{typography.caption}",
+      "combo": "chart-red"
+    }
+  },
+  "logo": {
+    "color": {
+      "src": "assets/logo-gdg-lockup.svg",
+      "background": "{colors.background}",
+      "usage": "Horizontal Google Developer Groups lockup — the preferred form (GDG brand guide); bottom-left on presenter slides.",
+      "url": "https://design-systems.venture.do/devfest-santo-domingo/assets/logo-gdg-lockup.svg"
+    },
+    "stacked": {
+      "src": "assets/logo-gdg-stacked.svg",
+      "background": "{colors.surface}",
+      "usage": "Stacked GDG lockup — when space is tight; it sits in the card's bottom-right notch on every card slide.",
+      "url": "https://design-systems.venture.do/devfest-santo-domingo/assets/logo-gdg-stacked.svg"
+    },
+    "icon": {
+      "src": "assets/logo-icon.svg",
+      "background": "{colors.background}",
+      "usage": "The four-pill bracket mark alone — favicon, avatars, the pill on the photo-quote badge.",
+      "url": "https://design-systems.venture.do/devfest-santo-domingo/assets/logo-icon.svg"
+    },
+    "devfest-santo-domingo": {
+      "src": "assets/logo-devfest-santo-domingo-dark.svg",
+      "background": "{colors.text}",
+      "usage": "The chapter's own lockup (white wordmark) — dark grounds only. Taken as-is from the chapter's site.",
+      "url": "https://design-systems.venture.do/devfest-santo-domingo/assets/logo-devfest-santo-domingo-dark.svg"
+    }
+  },
+  "examples": {
+    "colour-type-key": {
+      "src": "assets/examples/colour-type-key.jpg",
+      "caption": "The template's colour and type key",
+      "source": "template-pdf",
+      "page": "3",
+      "url": "https://design-systems.venture.do/devfest-santo-domingo/assets/examples/colour-type-key.jpg"
+    },
+    "title-card": {
+      "src": "assets/examples/title-card.jpg",
+      "caption": "Title slide — up to 2 lines at 60pt, Track @DevFest badge, speaker block",
+      "source": "template-pdf",
+      "page": "5",
+      "url": "https://design-systems.venture.do/devfest-santo-domingo/assets/examples/title-card.jpg"
+    },
+    "title-card-long": {
+      "src": "assets/examples/title-card-long.jpg",
+      "caption": "Title slide — 3 lines at 45pt",
+      "source": "template-pdf",
+      "page": "6",
+      "url": "https://design-systems.venture.do/devfest-santo-domingo/assets/examples/title-card-long.jpg"
+    },
+    "title-card-year": {
+      "src": "assets/examples/title-card-year.jpg",
+      "caption": "Title slide — 3 lines with the year tab, arrow and globe",
+      "source": "template-pdf",
+      "page": "7",
+      "url": "https://design-systems.venture.do/devfest-santo-domingo/assets/examples/title-card-year.jpg"
+    },
+    "title-photo": {
+      "src": "assets/examples/title-photo.jpg",
+      "caption": "Title slide with a photo window (magenta = placeholder photo)",
+      "source": "template-pdf",
+      "page": "8",
+      "url": "https://design-systems.venture.do/devfest-santo-domingo/assets/examples/title-photo.jpg"
+    },
+    "section-numbered": {
+      "src": "assets/examples/section-numbered.jpg",
+      "caption": "Numbered section divider — 3-line title at 45pt",
+      "source": "template-pdf",
+      "page": "11",
+      "url": "https://design-systems.venture.do/devfest-santo-domingo/assets/examples/section-numbered.jpg"
+    },
+    "section-numbered-long": {
+      "src": "assets/examples/section-numbered-long.jpg",
+      "caption": "Numbered section divider — 5-line title at 37pt, 2-line subhead",
+      "source": "template-pdf",
+      "page": "13",
+      "url": "https://design-systems.venture.do/devfest-santo-domingo/assets/examples/section-numbered-long.jpg"
+    },
+    "section-track-blue": {
+      "src": "assets/examples/section-track-blue.jpg",
+      "caption": "Track section divider — blue colourway, cloud",
+      "source": "template-pdf",
+      "page": "14",
+      "url": "https://design-systems.venture.do/devfest-santo-domingo/assets/examples/section-track-blue.jpg"
+    },
+    "section-track-green": {
+      "src": "assets/examples/section-track-green.jpg",
+      "caption": "Track section divider — green colourway, globe",
+      "source": "template-pdf",
+      "page": "15",
+      "url": "https://design-systems.venture.do/devfest-santo-domingo/assets/examples/section-track-green.jpg"
+    },
+    "section-track-yellow": {
+      "src": "assets/examples/section-track-yellow.jpg",
+      "caption": "Track section divider — yellow colourway, hash",
+      "source": "template-pdf",
+      "page": "16",
+      "url": "https://design-systems.venture.do/devfest-santo-domingo/assets/examples/section-track-yellow.jpg"
+    },
+    "section-track-red": {
+      "src": "assets/examples/section-track-red.jpg",
+      "caption": "Track section divider — red colourway, asterisk",
+      "source": "template-pdf",
+      "page": "17",
+      "url": "https://design-systems.venture.do/devfest-santo-domingo/assets/examples/section-track-red.jpg"
+    },
+    "content-text": {
+      "src": "assets/examples/content-text.jpg",
+      "caption": "Content card — one block of 25pt text",
+      "source": "template-pdf",
+      "page": "20",
+      "url": "https://design-systems.venture.do/devfest-santo-domingo/assets/examples/content-text.jpg"
+    },
+    "content-text-subhead": {
+      "src": "assets/examples/content-text-subhead.jpg",
+      "caption": "Content card — text block with a mono subhead",
+      "source": "template-pdf",
+      "page": "21",
+      "url": "https://design-systems.venture.do/devfest-santo-domingo/assets/examples/content-text-subhead.jpg"
+    },
+    "content-bullets": {
+      "src": "assets/examples/content-bullets.jpg",
+      "caption": "Content card — 1-line title and bullets",
+      "source": "template-pdf",
+      "page": "23",
+      "url": "https://design-systems.venture.do/devfest-santo-domingo/assets/examples/content-bullets.jpg"
+    },
+    "content-bullets-title-2": {
+      "src": "assets/examples/content-bullets-title-2.jpg",
+      "caption": "Content card — 2-line title, list pushed down",
+      "source": "template-pdf",
+      "page": "24",
+      "url": "https://design-systems.venture.do/devfest-santo-domingo/assets/examples/content-bullets-title-2.jpg"
+    },
+    "statement-neutral": {
+      "src": "assets/examples/statement-neutral.jpg",
+      "caption": "Statement in scallop brackets — neutral colourway",
+      "source": "template-pdf",
+      "page": "25",
+      "url": "https://design-systems.venture.do/devfest-santo-domingo/assets/examples/statement-neutral.jpg"
+    },
+    "statement-blue": {
+      "src": "assets/examples/statement-blue.jpg",
+      "caption": "Statement in scallop brackets — blue colourway",
+      "source": "template-pdf",
+      "page": "26",
+      "url": "https://design-systems.venture.do/devfest-santo-domingo/assets/examples/statement-blue.jpg"
+    },
+    "big-number": {
+      "src": "assets/examples/big-number.jpg",
+      "caption": "Big number — full width",
+      "source": "template-pdf",
+      "page": "30",
+      "url": "https://design-systems.venture.do/devfest-santo-domingo/assets/examples/big-number.jpg"
+    },
+    "photo-grid": {
+      "src": "assets/examples/photo-grid.jpg",
+      "caption": "Photo grid, five tiles (magenta = placeholder photos)",
+      "source": "template-pdf",
+      "page": "31",
+      "url": "https://design-systems.venture.do/devfest-santo-domingo/assets/examples/photo-grid.jpg"
+    },
+    "photo-pair": {
+      "src": "assets/examples/photo-pair.jpg",
+      "caption": "Photo pair (magenta = placeholder photos)",
+      "source": "template-pdf",
+      "page": "32",
+      "url": "https://design-systems.venture.do/devfest-santo-domingo/assets/examples/photo-pair.jpg"
+    },
+    "presenter-full-bleed": {
+      "src": "assets/examples/presenter-full-bleed.jpg",
+      "caption": "Presenter slide — statement left, presenter feed right, full bleed",
+      "source": "template-pdf",
+      "page": "34",
+      "url": "https://design-systems.venture.do/devfest-santo-domingo/assets/examples/presenter-full-bleed.jpg"
+    },
+    "presenter-framed": {
+      "src": "assets/examples/presenter-framed.jpg",
+      "caption": "Presenter slide — presenter feed in a framed card",
+      "source": "template-pdf",
+      "page": "35",
+      "url": "https://design-systems.venture.do/devfest-santo-domingo/assets/examples/presenter-framed.jpg"
+    },
+    "presenter-big-number-mono": {
+      "src": "assets/examples/presenter-big-number-mono.jpg",
+      "caption": "Big number beside the presenter — mono lead-in and tail",
+      "source": "template-pdf",
+      "page": "36",
+      "url": "https://design-systems.venture.do/devfest-santo-domingo/assets/examples/presenter-big-number-mono.jpg"
+    },
+    "presenter-big-number-blue": {
+      "src": "assets/examples/presenter-big-number-blue.jpg",
+      "caption": "Big number beside the presenter — pills and scallops, blue ground",
+      "source": "template-pdf",
+      "page": "38",
+      "url": "https://design-systems.venture.do/devfest-santo-domingo/assets/examples/presenter-big-number-blue.jpg"
+    },
+    "card-photo-quote": {
+      "src": "assets/examples/card-photo-quote.jpg",
+      "caption": "Card beside a photo — quote",
+      "source": "template-pdf",
+      "page": "42",
+      "url": "https://design-systems.venture.do/devfest-santo-domingo/assets/examples/card-photo-quote.jpg"
+    },
+    "card-photo-title-text": {
+      "src": "assets/examples/card-photo-title-text.jpg",
+      "caption": "Card beside a photo — title and short text",
+      "source": "template-pdf",
+      "page": "43",
+      "url": "https://design-systems.venture.do/devfest-santo-domingo/assets/examples/card-photo-title-text.jpg"
+    },
+    "card-photo-bullets": {
+      "src": "assets/examples/card-photo-bullets.jpg",
+      "caption": "Card beside a photo — title and bullets",
+      "source": "template-pdf",
+      "page": "45",
+      "url": "https://design-systems.venture.do/devfest-santo-domingo/assets/examples/card-photo-bullets.jpg"
+    },
+    "photo-quote-badge": {
+      "src": "assets/examples/photo-quote-badge.jpg",
+      "caption": "Full-bleed photo with a quote card and the Track @DevFest badge",
+      "source": "template-pdf",
+      "page": "47",
+      "url": "https://design-systems.venture.do/devfest-santo-domingo/assets/examples/photo-quote-badge.jpg"
+    },
+    "chart-kit": {
+      "src": "assets/examples/chart-kit.jpg",
+      "caption": "Chart kit — boxes, label pills, arrow",
+      "source": "template-pdf",
+      "page": "49",
+      "url": "https://design-systems.venture.do/devfest-santo-domingo/assets/examples/chart-kit.jpg"
+    },
+    "chart-simple": {
+      "src": "assets/examples/chart-simple.jpg",
+      "caption": "Simple chart — three grouped containers",
+      "source": "template-pdf",
+      "page": "50",
+      "url": "https://design-systems.venture.do/devfest-santo-domingo/assets/examples/chart-simple.jpg"
+    },
+    "chart-all-purpose": {
+      "src": "assets/examples/chart-all-purpose.jpg",
+      "caption": "All-purpose chart — one-to-many tree",
+      "source": "template-pdf",
+      "page": "51",
+      "url": "https://design-systems.venture.do/devfest-santo-domingo/assets/examples/chart-all-purpose.jpg"
+    },
+    "chart-portfolio": {
+      "src": "assets/examples/chart-portfolio.jpg",
+      "caption": "Portfolio chart — four categories",
+      "source": "template-pdf",
+      "page": "52",
+      "url": "https://design-systems.venture.do/devfest-santo-domingo/assets/examples/chart-portfolio.jpg"
+    },
+    "chart-process-grid": {
+      "src": "assets/examples/chart-process-grid.jpg",
+      "caption": "Process chart — column grid with a snaking path",
+      "source": "template-pdf",
+      "page": "53",
+      "url": "https://design-systems.venture.do/devfest-santo-domingo/assets/examples/chart-process-grid.jpg"
+    },
+    "chart-flow": {
+      "src": "assets/examples/chart-flow.jpg",
+      "caption": "Flow chart — steps, decision, branch",
+      "source": "template-pdf",
+      "page": "54",
+      "url": "https://design-systems.venture.do/devfest-santo-domingo/assets/examples/chart-flow.jpg"
+    },
+    "chart-group": {
+      "src": "assets/examples/chart-group.jpg",
+      "caption": "Group chart — many into one",
+      "source": "template-pdf",
+      "page": "55",
+      "url": "https://design-systems.venture.do/devfest-santo-domingo/assets/examples/chart-group.jpg"
+    },
+    "chart-process-layered": {
+      "src": "assets/examples/chart-process-layered.jpg",
+      "caption": "Process chart — layered fan-in and fan-out",
+      "source": "template-pdf",
+      "page": "56",
+      "url": "https://design-systems.venture.do/devfest-santo-domingo/assets/examples/chart-process-layered.jpg"
+    },
+    "chart-timeline": {
+      "src": "assets/examples/chart-timeline.jpg",
+      "caption": "Timeline chart",
+      "source": "template-pdf",
+      "page": "57",
+      "url": "https://design-systems.venture.do/devfest-santo-domingo/assets/examples/chart-timeline.jpg"
+    }
+  },
+  "overview": "DevFest Santo Domingo speaks through Google's DevFest 2026 slide template: an off-white ground, white rounded cards drawn with one 2px Black 02 line, a notched corner that holds the Google Developer Groups lockup, and Google's four colours used as accents — brackets, dots, arrows — never behind text. Headlines are Google Sans Bold, subheads and speaker lines Roboto Mono Light, body Google Sans Regular. It is friendly and diagrammatic: pastel grounds, scalloped brackets, round dots and simple line icons.",
+  "guidelines": {
+    "dos": [
+      "Do pick the layout built for your line count: a longer title moves to the smaller size or the next variant; it never shrinks to fit.",
+      "Do use one 2px Black 02 line for every outline, and Black 02 for all text on every ground.",
+      "Do keep a colourway whole: its ground, its core colour on the brackets and dots, and its icon change together.",
+      "Do put a coloured chart label only on a box of the same colour; the black pill is the neutral one.",
+      "Do keep text and graphics left of the centre line on presenter slides; the presenter's feed starts at 54%.",
+      "Do replace every placeholder photo and credit the source of every image you add.",
+      "Do delete the template's pink instruction slides and magenta call-outs before presenting."
+    ],
+    "donts": [
+      "Don't put text or a photo's subject in the lockup notch (bottom-right 29% × 22% of a card slide), and don't cover or recolour the GDG lockup.",
+      "Don't set text on a core colour (Blue 500, Green 500, Yellow 600, Red 500) or fill a card with one — they are accents.",
+      "Don't use #fbbc04 for yellow: the colour is Yellow 600 #f9ab00.",
+      "Don't add shadows, gradients, other fonts, or unoutlined shapes.",
+      "Don't use the template's flags slide: it has no Dominican Republic flag, so speakers bring their own."
+    ]
+  },
+  "sections": {
+    "overview": "DevFest Santo Domingo speaks through Google's DevFest 2026 slide template: an off-white ground, white rounded cards drawn with one 2px Black 02 line, a notched corner that holds the Google Developer Groups lockup, and Google's four colours used as accents — brackets, dots, arrows — never behind text. Headlines are Google Sans Bold, subheads and speaker lines Roboto Mono Light, body Google Sans Regular. It is friendly and diagrammatic: pastel grounds, scalloped brackets, round dots and simple line icons.\n\nThis file is that template taken apart so a slide can be built from it without the template. Every layout in the deck is valid for any talk. The 71 slides hold 15 layouts: most of the rest are one layout copied at different title lengths or in different colourways, and here each becomes one layout with a rule. **Slide layouts** lists them, **Charts** gives the diagram kit's rules, and **Device frames** the phone, tablet, watch and laptop frames for showing apps.",
+    "logo": "The slides carry the **Google Developer Groups** lockup, not a DevFest logo: the four-pill bracket mark with \"Google Developer Groups\" beside it (horizontal) or in three lines (stacked). Google's guide prefers the horizontal lockup and allows the stacked one where space is tight — which, on slides, is the card's bottom-right notch. The event's own name lives in the Track @DevFest badge (see Graphics) and in the chapter's lockup.\n\n| File | What | Where it goes |\n|---|---|---|\n| `assets/logo-gdg-lockup.svg` | GDG horizontal lockup | Bottom-left of presenter slides (about 312 × 30px at 960 × 540), 36px from the left and 39px from the bottom |\n| `assets/logo-gdg-stacked.svg` | GDG stacked lockup | In the lockup notch of every card slide, about 202 × 54px, 43px from the right and 35px from the bottom |\n| `assets/logo-icon.svg` | The bracket mark | Favicons, avatars; in a white pill beside the badge on the photo-quote slide |\n| `assets/logo-devfest-santo-domingo-dark.svg` | The chapter's \"DevFest Santo Domingo\" lockup, white wordmark | Dark grounds only — the chapter's site and social. Not used on the template's slides |\n\n**Usage rules:**\n- The lockup is part of the slide frame: stacked in the notch on card and collage slides, horizontal bottom-left on presenter slides, and none on statement, big-number, chart and device slides. Don't add it where the template has none, and never cover it.\n- Keep the mark's four colours and its black outline; don't recolour, stretch or rotate it, and don't set the wordmark in another face.\n- Neither Google's guide nor the template gives clear space or a minimum size. Until one is supplied, keep at least the mark's own height clear around the lockup and don't set the stacked lockup smaller than it sits on the slides.\n- The GDG lockups here are rebuilt vectors — the template has them only as raster art (see Roadmap). The chapter's lockup is the chapter's own file, used as delivered.",
+    "colors": "Four families, each with one job, on two neutrals. **Black 02 `#1e1e1e`** is all text and every outline; **Off White `#f0f0f0`** is the ground; **white `#ffffff`** fills cards and pills.\n\n- **Core — Blue 500 `#4285f4`, Green 500 `#34a853`, Yellow 600 `#f9ab00`, Red 500 `#ea4335`.** Accents only: the brackets and dots of a colourway, chart arrows. They never carry text and never fill a card.\n- **Halftones — `#57caff` `#5cdb6d` `#ffd427` `#ff7daf`.** The bright partners, used only in charts: label pills and the odd saturated box (a start/end or decision node).\n- **Pastels — `#c3ecf6` `#ccf6c5` `#ffe7a5` `#f8d8d8`.** A whole slide's colourway ground (section, statement and big-number slides), and the boxes and containers in charts.\n\nTake colours from these tokens, never with an eyedropper from the template: part of its art was exported in the wrong colour profile, so its green, yellow and red grounds paint `#c1f8c0`, `#ffe79c` and `#fed7d7` and its GDG mark paints `#2484fb`-ish blue. Those are the palette values above read as Display P3 — the maths reproduces them to within one unit — not different colours.\n\nA colourway is a fixed set: its ground, its core colour on the brackets and dots, and its icon (blue — cloud, green — globe, yellow — hash, red — asterisk). There are four of them plus neutral (off-white). Text stays Black 02 on every ground; the only white text is on the black chart pill.\n\nYellow is **Yellow 600 `#f9ab00`**. The template's colour slide labels the swatch \"Google Yellow 500 #fbbc04\" but fills it `#f9ab00`, every slide paints `#f9ab00`, and Google's GDG brand guide calls it Yellow 600. For print, the guide prefers Pantone over CMYK; both are in `print:`.",
+    "typography": "Two families, both on Google Fonts under the OFL: **Google Sans** and **Roboto Mono**. Headlines are Google Sans Bold, body Google Sans Regular, big numbers and chart labels Google Sans Medium; Roboto Mono Light is the \"code-style\" voice for subheads, speaker lines and sub-bullets, with Thin for section numbers and ExtraLight for the year.\n\n**Size by line count, not by taste.** The template sets a title at a fixed size for its line count and never shrinks it to fit:\n\n| Role | Lines | pt | px at 960×540 | Token |\n|---|---|---|---|---|\n| Title slide | up to 2 | 60 | 80 | `display` |\n| Title slide | 3 (max) | 45 | 60 | `h1` |\n| Section title | 1–3 | 45 | 60 | `h1` |\n| Section title | 4–5 (max) | 37 | 49 | `h2` |\n| Section subhead | up to 3 (2 under a 5-line title) | 18 with a 45pt title, 16 with a 37pt title | 24 / 21 | `subhead` / `subhead-sm` |\n| Content-slide title | 1–2 | 30 | 40 | `h3` |\n| Text block, main bullets, statements | — | 25 | 33 | `body-lg` |\n| Body or bullets in a half-width card | — | 20 | 27 | `body-md` |\n| Presenter statement | 4–5 | 29 | 39 | `statement` |\n| Speaker name / title, sub-bullets, attribution | 2 | 16 | 21 | `subhead-sm` |\n| Big number | 1 | 110 / 95 beside the presenter | 147 / 127 | `number-xl` / `number-lg` |\n| Section number (01–05) | 1 | 61 Thin | 81 | `section-number` |\n| Chart title / box caption / label pill | 1 / 2 / 1 | 25 / 15 / 14 | 33 / 20 / 19 | `body-lg` / `caption` / `label` |\n\nTitles are tight (0.9 line height for 45pt and up). Main bullets use a 20pt ● at 1.15 line spacing with 10pt of space before each item; sub-bullets are Roboto Mono Light 16pt with an 11pt ○. The template's note says \"1.5 line spacing\" for bullets, but its own slides set 1.15, and 1.15 is what renders — follow the slides. Everything is sentence case and left-aligned, except numbers and pill text, which are centred.\n\nGoogle's GDG brand guide names **Google Sans Mono** as the secondary face; this template uses Roboto Mono Light instead, and the template wins. Google Sans is on Google Fonts now, so no stand-in is needed. Fallbacks: `\"Google Sans\", system-ui, sans-serif` and `\"Roboto Mono\", ui-monospace, monospace`.",
+    "layout": "The canvas is **960 × 540 px** (the deck's 720 × 405 pt at 96 dpi; 1 pt = 1.333 px). Everything else hangs off one measure: **38 px** is both the outer margin and the gutter between cards.\n\n- **The card.** White, 2px Black 02 outline, 28px corners, inset 38px from every edge (its line runs x 38–922, y 40–501). Text sits about 48px inside it.\n- **The lockup notch.** The card's bottom-right corner is cut away to hold the stacked GDG lockup: nothing goes right of x 679 (70.7%) below y 422 (78%). The lockup sits about 30px inside the notch.\n- **The badge notch.** On title slides the top-left corner is cut away for the Track @DevFest badge (about 263 × 103px from the top-left margin); the title below it is bottom-anchored and grows upward.\n- **Presenter slides.** The presenter's video or photo starts at x 518 (54%) and runs off the right edge; text and graphics stay left of the centre line, x 480. For a voice-over or a full-screen video, use full-screen layouts on every slide instead.\n- **Charts** have no card: a 25pt title at the top left (about x 37, y 26–91) and a content field from y 118 to about 490, 35px margins.\n\nSpacing tokens are the values that recur, not a strict grid: 12, 16, 20, 30, 38, 48px.",
+    "shapes": "**One line: 2px (1.5pt) Black 02**, flat cap, round join — every card, pill, box, dot, icon, scallop and arrow. There are no shadows, gradients or unoutlined shapes.\n\n- **Cards and photos: 28px corners** (`rounded.card`). Photo tiles share the card's corner and outline.\n- **Pills are fully round** (`rounded.full`): label pills 41px tall, the big-number kicker pills 73px, the badge's location pill 25px.\n- **Chart boxes** round in proportion to their short side, which lands between 12 and 24px (`sm`–`xl`): 12px on a 65px caption box, 17px on the large box.\n- **Scallop brackets** — a column of outward semicircles, like wavy parentheses — frame statements (5 per side) and big numbers (4 per side).\n- **Dots** come in threes: 64px circles, 20px apart, filled with the colourway's core colour, outlined.\n- **Arrows** are straight or elbow connectors with a small notched (\"stealth\") head, about 13 × 9px, at the target.",
+    "components": "Tokens for the pieces the slides repeat; the samples render on the brand page.\n\n- **card** — the white content card: surface, 2px Black 02 border, 28px radius, 48px padding. The notched corners are part of the slide frame, not of the component.\n- **pill-kicker** — the white pill that holds a big number's one-line lead-in and tail, `body-lg`.\n- **badge** — the white location pill inside the Track @DevFest badge, `badge` type.\n- **label-dark / label-blue / label-green / label-yellow / label-red** — chart label pills, `label` type. White text only on `label-dark`.\n- **box-blue / box-green / box-yellow / box-red** — chart caption boxes, pastel fill, 12px radius, `caption` type. A label goes only on the box of its own colour (see Charts).",
+    "slide-layouts": "Pick the layout, then pick the variant by what you have to say: how many lines the title runs, which colourway, whether the presenter is on camera. Never shrink type to squeeze in more — move to the variant built for it, or split the slide. Only the text is yours to change: the cards, notches, badges, brackets, icons, dots and lockups are the frame.\n\n| Layout | Template slides | Use it for | Text limits | Type |\n|---|---|---|---|---|\n| title-card | 5, 6, 7 | Opening slide: talk title, speaker, track | Title 2 lines at 60pt or 3 at 45pt (max). Speaker: 2 lines | `display` / `h1`; speaker `subhead-sm` |\n| title-photo | 8 | Opening slide with a portrait or product photo | Title 3 lines, short words (column is 451px wide). Speaker: 2 lines | `h1`; `subhead-sm` |\n| section-numbered | 9–13 | Agenda-style divider, 01–05 | Title 1–5 lines; subhead 3 lines (2 under a 5-line title) | number `section-number`; title `h1` (1–3 lines) or `h2` (4–5); `subhead` / `subhead-sm` |\n| section-track | 14–17 | Divider in a colourway, with the track badge | Title up to 5 lines; subhead as above | as section-numbered |\n| content-text | 20, 21 | One paragraph of prose | 9 lines of 25pt (7 with a subhead); subhead 2 lines | `body-lg`; `subhead-sm` |\n| content-bullets | 22–24 | Talking points | Title 0–2 lines; about 4 bullets, 1 line each (2 at most) | `h3`; `body-lg`; sub-bullets `subhead-sm` |\n| statement | 25–29 | The one sentence to remember | 5 lines of 25pt, about 24 characters a line | `body-lg`, lead word Bold |\n| big-number | 30 | One statistic, full width | Lead-in 1 line, number up to about 4 characters, tail 1 line | `number-xl`; pills `body-lg` |\n| photo-collage | 31, 32 | Event, team or venue photos | No text | — |\n| presenter | 34, 35 | Statement while the presenter is on camera | 4–5 lines of 29pt | `statement` |\n| presenter-big-number | 36–41 | A statistic while the presenter is on camera | Lead-in 1 line, number, tail 1 line | `number-lg`; pills `body-lg` or mono `subhead` |\n| card-photo | 42–46 | Quote, title + text, or title + bullets beside a photo | Title 1–2 lines; 4–5 lines of text or about 4 bullets | `h3`; `body-md` (quote `body-lg`) |\n| photo-quote | 47 | A quote over a full-bleed photo | 3 lines of 30pt Bold; attribution 2 lines | `h3`; `subhead-sm` |\n| charts | 49–57 | Diagrams — see Charts | Labels 1–2 words; captions 2 lines | `body-lg`; `caption`; `label` |\n| device | 59–68 | An app screenshot in a device — see Device frames | — | — |\n\n- **title-card** — White notched card; the Track @DevFest badge top-left (the track name replaces \"Track\", the room or city goes in the pill); stacked GDG lockup bottom-right. The title is bottom-anchored just above the two-line speaker block (name, then \"Title, Company\"), so a longer title grows up toward the badge. Variant with the year: the card's top tab moves right to hold the year (Roboto Mono ExtraLight 45pt) and a long arrow and a wireframe globe run along the top.\n- **title-photo** — The year-variant frame, but the card becomes a stepped photo window at the right; title and speaker sit on the ground at the left, aligned to the 38px margin.\n- **section-numbered** — L-shaped card: the two-digit number (01, 02…) in the top strip, the title and a mono subhead in the body, a pastel-yellow up-arrow and three arches in the bottom-left notch. Move the subhead to sit about 17pt (23px) under the title's last line.\n- **section-track** — Colourway ground; the badge, the colourway's icon and three dots in the left column; the title and subhead in a white card on the right. The ground, the brackets and dots, and the icon change together — never recolour one part.\n- **content-text / content-bullets** — The full notched card. Keep the last lines of text out of the lockup notch; break a line early rather than run under it. A title that wraps to 2 lines gets its own box and pushes the list down.\n- **statement** — Two scallop brackets hold the statement; the right column carries the badge, the colourway icon and three dots. Bold only the lead word or phrase. Five colourways: neutral (off-white, a pastel-blue \"//\" and pastel-green dots) and the four core ones. No GDG lockup on this slide.\n- **big-number** — Left half: a white pill with the lead-in, the number between 4-scallop brackets, a white pill with the tail — read as one sentence (\"Use more than / 50% / of this large number slide\"). Right half: two leaning pastel slashes and two circles, an oversized %. No lockup.\n- **photo-collage** — Five tiles (a wide one and two squares over a square and a wide notched tile) or two tall tiles. The largest tile always carries the lockup notch; keep the subject out of it.\n- **presenter** — Statement on the left over the off-white ground, the presenter full-bleed or in a framed card on the right, the horizontal GDG lockup bottom-left.\n- **presenter-big-number** — Either mono (Roboto Mono Light lead-in and tail, no pills, the horizontal lockup) or framed (white pills and scallop brackets, no lockup) on off-white or any of the four colourway grounds.\n- **card-photo** — Two cards side by side, text on the left, photo on the right; the photo card carries the lockup notch. The text card ends at 48% of the width, so this layout is presenter-safe with a photo of the presenter.\n- **photo-quote** — A full-bleed photo; a white quote card bottom-left sized to the quote; the badge top-left in a small off-white card, with three pastel-red circles and the GDG mark in a pill beside it.\n\nTemplate-only slides — the pink instruction slides (1, 2, 4, 18, 19, 33, 48, 58, 69), the colour key (3), the Google logo library (70) and the flags (71) — are not layouts. Delete the pink slides and any magenta call-outs before presenting.",
+    "charts": "The diagram kit is one rule and a handful of parts: **a coloured label goes only on a box of its own colour** — Halftone Blue on Pastel Blue, Halftone Yellow on Pastel Yellow, Halftone Red on Pastel Red, Halftone Green on Pastel Green (the template's own words: \"Only use colored labels on corresponding medium box color\"). The black pill is neutral and is the only place for white text.\n\n- **Parts.** Large box (white or pastel container, 17px corners, caption top-left). Medium box (pastel, 12px corners, 15pt Medium caption, up to 2 lines). Label pill (fully round, 41px tall, 14pt Medium, 1–2 words). Small white caption pill on an arrow (33px tall, 10pt). Arrow (2px, notched head at the target; both ends for two-way).\n- **Arrow colour** is Black 02 for plain structure (trees, hierarchy). In a flow it follows the tier it leaves: Blue 500 for the main path, Green 500 for start and loop-back, Red 500 out of a pink tier, Yellow 600 on the alternate branch to the end. Grouping brackets and timeline stems are plain lines with no head.\n- **Colour order.** Categories run yellow → pink (red) → green → blue. A single-category diagram is all Pastel Blue.\n- **Flowcharts.** Start and End are Halftone Green boxes, a decision is a Halftone Blue box, the \"No\" branch is pink, and a caption on a transition goes in a small white pill above the arrow — never inside a box.\n- **Timelines.** A Pastel Blue arrow for the axis; captions staggered on two heights above (Pastel Yellow) and below (Pastel Green), each tied to the axis with a plain stem; one Pastel Red caption for the milestone that matters.\n- **Charts sit on Off White** with no card, no badge and no lockup. Leave cells empty rather than filling every slot; many-to-many arrows may cross.\n\nThe nine charts in the template — simple, all-purpose tree, portfolio, process grid, flow, group, layered process, timeline, and the parts sheet — are in Examples.",
+    "device-frames": "Frames for showing an app, all with a transparent screen: put the screenshot **under** the frame, sized to the screen rectangle (pixels in the frame file). The wireframes are outlines only — clip the screenshot to their rounded screen.\n\n| File | Device | Screen (x, y, w, h · radius) |\n|---|---|---|\n| [pixel-8-portrait.png](assets/device-frames/pixel-8-portrait.png) | Pixel 8 | 18, 19, 412 × 918 · 35 (camera dot on top) |\n| [pixel-8-landscape.png](assets/device-frames/pixel-8-landscape.png) | Pixel 8, landscape | 19, 20, 918 × 413 · 35 |\n| [pixel-fold-closed.png](assets/device-frames/pixel-fold-closed.png) | Pixel Fold, closed | 42, 28, 410 × 791 · 35 |\n| [pixel-fold-open.png](assets/device-frames/pixel-fold-open.png) | Pixel Fold, open | 31, 48, 840 × 701 · 18 |\n| [iphone-14-portrait.png](assets/device-frames/iphone-14-portrait.png) | iPhone 14 | 45, 37, 704 × 1526 · 87 (notch on top) |\n| [iphone-14-landscape.png](assets/device-frames/iphone-14-landscape.png) | iPhone 14, landscape | 37, 40, 1526 × 704 · 86 (notch on the left) |\n| [tablet-portrait.png](assets/device-frames/tablet-portrait.png) | Tablet | 60, 60, 797 × 1274 · 14 |\n| [tablet-landscape.png](assets/device-frames/tablet-landscape.png) | Tablet, landscape | 60, 58, 1274 × 797 · 15 |\n| [wear-os.png](assets/device-frames/wear-os.png) | Pixel Watch (Wear OS) | circle centred 430, 570, diameter 792 — clip to a circle |\n| [chromebook-plus.png](assets/device-frames/chromebook-plus.png) | Chromebook Plus | 286, 37, 1023 × 577 · 3 |\n| [pixelbook-go.png](assets/device-frames/pixelbook-go.png) | Pixelbook Go | 246, 60, 1104 × 622 · 2 |\n| [wireframe-mobile-portrait.svg](assets/device-frames/wireframe-mobile-portrait.svg) | Phone wireframe | 6, 7, 539 × 1199 · 48 |\n| [wireframe-mobile-landscape.svg](assets/device-frames/wireframe-mobile-landscape.svg) | Phone wireframe, landscape | 7, 6, 1218 × 547 · 47 |\n| [wireframe-tablet-portrait.svg](assets/device-frames/wireframe-tablet-portrait.svg) | Tablet wireframe | 7, 7, 743 × 1188 · 19 |\n| [wireframe-tablet-landscape.svg](assets/device-frames/wireframe-tablet-landscape.svg) | Tablet wireframe, landscape | 6, 7, 1291 × 807 · 17 |\n| [wireframe-wear-os.svg](assets/device-frames/wireframe-wear-os.svg) | Watch wireframe | circle centred 378, 739, diameter 742 |\n\nFrames sit on Off White with nothing else on the slide but a small uppercase mono caption naming the device. The Pixel 8 frames are low resolution (about 450 × 950px); don't show them larger than about half the slide's height.",
+    "graphics": "The ornaments are few and always line-drawn in the 2px Black 02 stroke. Each is an SVG in `assets/graphics/`, sized for the 960 × 540 canvas.\n\n| File | What | Where it goes |\n|---|---|---|\n| `track-badge.svg` | The **Track @DevFest** badge: curly braces, the track name over \"@DevFest\", and a white pill for the location | Top-left of title and track-section slides; right column of statements; photo-quote slide. Braces are Pastel Blue on title slides and the colourway's core colour on section and statement slides. \"@DevFest\" is outlined; the track name and the location are live text, to be set in Google Sans |\n| `cloud.svg`, `globe.svg`, `puzzle-hash.svg`, `asterisk.svg` | The colourway icons — blue, green, yellow, red | Left column of track sections; right column of statements. Unfilled, so the ground shows through |\n| `double-slash.svg` | Two Pastel Blue slashes | The neutral colourway's icon on statements |\n| `double-slash-wide.svg` | Leaning blue and green slashes | Right half of the big-number slide, with a Pastel Yellow and a Pastel Red circle at opposite corners |\n| `arrow-up.svg` | Chunky Pastel Yellow up-arrow | Numbered section dividers, bottom-left |\n| `scallop-arches.svg` | Three arches in a row | Under the up-arrow on numbered dividers |\n| `arrow-to-globe.svg` | A long arrow into a small globe | Top strip of the title slide with the year, and of the photo title |\n| `scallop-bracket-left.svg` / `-right.svg` | Five-scallop brackets | Either side of a statement |\n| `scallop-bracket-short-left.svg` / `-right.svg` | Four-scallop brackets | Either side of a big number |\n\nThe **three dots** are not a file: 64px circles, 20px apart, filled with the colourway's core colour, 2px outline, at the foot of the badge column. The asterisk and the short scallops are drawn slightly heavier (1.7pt) in the template, and the files keep that.",
+    "photography": "Every photo in the template is a **magenta-tinted placeholder** (pets, not people) — replace each one, and never ship or reuse them. Photos take the card's 28px corners and 2px outline, or run full-bleed off the slide edge; in a notched window the subject stays out of the lockup notch. The template's first instruction applies to every image you add: **credit its source** on the slide or in the notes.",
+    "voice": "The chapter speaks Spanish first (the site is `es-DO`, with English at `/en`). The tagline is the site's hero line, *\"Donde los developers construyen el futuro.\"* (\"Where developers build the future.\"); the event describes itself as *\"El evento tecnológico comunitario más grande de la República Dominicana.\"*\n\n- The event is **DevFest Santo Domingo** (2026: 9–10 October, Biblioteca Nacional Pedro Henríquez Ureña). The chapter is **Google Developer Group Santo Domingo**, or **GDG Santo Domingo** — Google's naming rule is \"Google Developer Group [CITY]\" or \"GDG [CITY]\".\n- On slides the talk's track fills **Track** in the badge (\"Web @DevFest\", \"Cloud @DevFest\"); \"@DevFest\" is fixed. The pill takes the room or the city.\n- Mono lines read like code — short, lowercase-friendly, factual: speaker names, dates, section labels.",
+    "dos-and-donts": "- **Do** pick the layout built for your line count: a longer title moves to the smaller size or the next variant; it never shrinks to fit.\n- **Do** use one 2px Black 02 line for every outline, and Black 02 for all text on every ground.\n- **Do** keep a colourway whole: its ground, its core colour on the brackets and dots, and its icon change together.\n- **Do** put a coloured chart label only on a box of the same colour; the black pill is the neutral one.\n- **Do** keep text and graphics left of the centre line on presenter slides; the presenter's feed starts at 54%.\n- **Do** replace every placeholder photo and credit the source of every image you add.\n- **Do** delete the template's pink instruction slides and magenta call-outs before presenting.\n- **Don't** put text or a photo's subject in the lockup notch (bottom-right 29% × 22% of a card slide), and don't cover or recolour the GDG lockup.\n- **Don't** set text on a core colour (Blue 500, Green 500, Yellow 600, Red 500) or fill a card with one — they are accents.\n- **Don't** use `#fbbc04` for yellow: the colour is Yellow 600 `#f9ab00`.\n- **Don't** add shadows, gradients, other fonts, or unoutlined shapes.\n- **Don't** use the template's flags slide: it has no Dominican Republic flag, so speakers bring their own.",
+    "history": "- **2026-09-25 — First capture (version 2026).** Taken from Google's DevFest 2026 presentation template: the `.pptx` for exact values, Google's PDF export for the art. Decisions by the owner: the **template is the brand**; every layout in it is valid for any talk; layouts are written up as prose and examples (no schema change); **no flags** (the deck's set has no DO — speakers use their own) and no Google logo library.\n- **The chapter's site has a different look, and it is not the brand.** [devfest.gdgsantodomingo.org](https://devfest.gdgsantodomingo.org/) is a dark \"neon\" theme built by the chapter: a blue-black `#0a0a0f` ground with `#13131a`–`#1e1e2a` panels; Tailwind purple `#a855f7`, cyan `#22d3ee` and pink `#ec4899` accents, with a purple-to-cyan gradient on the headline; Geist for headings, Inter for body, Geist Mono labels, IBM Plex Mono numbers. Google's colours appear there only in the mark, a four-dot chip and a stripe on the share image. The chapter's sponsorship deck uses the same look. It is recorded here, not tokenised.\n- **The two source files are different revisions.** The `.pptx` still carries DevFest 2025 art (images named `DF25_…`, a `{ DevFest }` badge with no \"Track\"); the PDF export is the 2026 \"Track @DevFest\" version with the track name as live text. The PDF is followed for the art; the `.pptx` XML for colours, sizes and positions, which agree.\n- **Where the template disagrees with itself.** Yellow is `#f9ab00`: the colour slide prints \"#fbbc04\" but fills the swatch `#f9ab00`, every slide paints it, and the GDG guide names it Yellow 600. The green, yellow and red slide grounds paint `#c1f8c0`, `#ffe79c` and `#fed7d7`, and the raster GDG mark paints `#2484fb` / `#00ab47` / `#fd2b25` / `#ffa700`: each is the palette value (`#ccf6c5`, `#ffe7a5`, `#f8d8d8`; `#4285f4`, `#34a853`, `#ea4335`, `#f9ab00`) read as Display P3 — a colour-profile error in the export, reproduced by the maths to within one unit — so the tokens keep the palette values. Some of those misread hexes were then typed into the slides' XML (slides 30 and 39–41), which is why an eyedropper is not a source. Bullets are 1.15 line spacing on every slide, against a stated 1.5. Two off-whites are in use — `#f0f0f0` on vector slides and `#f2f1f0` inside the raster art — and `#f0f0f0` is the token. The colour slide also carries typos (\"##c3ecf6\", \"Halftone  Blue\").\n- **Fonts.** Google Sans is on Google Fonts under the OFL (weights 400–700), so the real face is used with no substitute. Google's GDG brand guide names Google Sans Mono as the secondary face; the template uses Roboto Mono Light, and the template is followed.",
+    "roadmap": "**Delivered below Tier 1** ([ideal-input](../../docs/ideal-input.md)): a slide template, not a brandbook. With Google's GDG brand guide it covers colour (HEX, Pantone and CMYK), type and the GDG lockup rule, but there is no clear-space or minimum-size rule, no note saying which revision prevails (the `.pptx` and the PDF differ), and no vector package — the cards, badges, brackets and icons are raster art inside the slides.\n\nTo ask the chapter (GDG Santo Domingo):\n\n- The **DevFest Santo Domingo lockup** as SVG for light grounds and dark grounds, horizontal and stacked. The site has only the dark-ground version, and its mark uses the site's own colours (`#537dbe` blue, `#e94535`, `#f3aa1c`, `#35a74f`) instead of Google's `#4285f4` `#ea4335` `#f9ab00` `#34a853` — confirm which are meant.\n- The **2026 organiser kit** from the regional GDG lead, and which revision of the presentation template is current. The Drive `.pptx` still has 2025 art.\n- **Clear space and minimum size** for the GDG lockup and the chapter lockup.\n- Reconcile the event facts the site and the sponsorship deck disagree on: attendance (500+ a day vs 600+) and edition count (8, 7 or 6).\n\nOn our side:\n\n- **Replace the rebuilt GDG lockups with Google's files.** Neither the `.pptx` nor the PDF holds a vector of any mark, badge or icon — they are baked into full-slide images. The mark here takes its geometry from the chapter site's Illustrator icon; the wordmark is Google Sans glyph outlines fitted to the slide art (within half a pixel at 250 ppi); the badge and icons are fitted the same way. The GDG brand guide's Logos page links the official lockups — swap them in, and keep the icons unless Google supplies vectors.\n- **The mark's outline and the GDG wordmark** are Black 02 `#1e1e1e` in the files; the art paints near-blacks between `#101010` and `#1e1e1e`, so the brand ink was chosen over a one-off value.\n- **Proof deck.** Build a short talk from this file alone and compare it side by side with the template; fold anything it gets wrong back into Slide layouts.\n- **Flags** are out by decision. If a flag set is ever wanted, source a full SVG set — the template's set has no DO."
+  }
+}
