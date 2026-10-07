@@ -350,6 +350,131 @@ AlphaEarth Foundations Satellite Embedding: Google DeepMind / Google Earth Engin
 Los análisis de este notebook son **didácticos**: un umbral de radar no sustituye una evaluación de daños oficial."""),
 ]
 
+# ============================================================================ PISTA D
+pista_d = [
+    md(f"""# 🗺️ Pista D — Tu plataforma de vigilancia satelital con AlphaEarth
+**Código que Salva Vidas · DevFest Santo Domingo 2026 · Taller · Nivel principiante**
+
+[![Abrir en Colab](https://colab.research.google.com/assets/colab-badge.svg)]({COLAB}/pista_D_alphaearth.ipynb)
+
+**Amazon Mining Watch** (Earth Genome) vigila con satélite la minería de oro en los nueve países amazónicos: 1,1 millones de hectáreas detectadas hasta 2026.
+**Google Earth** acaba de estrenar *Classify*: le marcas unos ejemplos y te clasifica cultivos, bosque o barrios usando **AlphaEarth Foundations**.
+
+Aquí construyes tu propia versión para **República Dominicana**, enfocada en **erosión y cambios del suelo**:
+
+| Paso | Pregunta | Cómo |
+|---|---|---|
+| 1 | ¿Qué hay? | AlphaEarth (64 números por píxel de 10 m) y Sentinel-2 |
+| 2 | ¿Dónde cambió entre 2017 y 2025? | Comparar las "huellas" de AlphaEarth de los dos años |
+| 3 | ¿Ese cambio está en ladera? | Pendiente del modelo de elevación Copernicus |
+| 4 | ¿Qué es cada cosa hoy? | Clasificar con unos pocos ejemplos, como Classify |
+| 5 | ¿Cómo se lo explico a alguien? | Informe con Gemini |
+| 6 | **Tu plataforma** | Una app web con Gradio y un enlace para compartir |
+
+Todo con datos abiertos: **no necesitas proyecto de Google Cloud ni de Earth Engine.**
+**Importante:** esto da *señales para revisar*, no diagnósticos. Un cambio en ladera puede ser erosión, una cosecha o una obra; hay que verificarlo en terreno."""),
+    code(f"""# Instala lo necesario y trae el código del taller (~40 s)
+!pip -q install rasterio pystac-client planetary-computer google-genai gradio scikit-learn
+!wget -q -N https://raw.githubusercontent.com/{REPO}/main/taller/ayuda.py https://raw.githubusercontent.com/{REPO}/main/taller/plataforma.py
+import ayuda, plataforma as pf, numpy as np, matplotlib.pyplot as plt
+plt.rcParams.update({{"figure.dpi": 110, "font.size": 10}})
+print("Listo ✅")"""),
+    md("""## Paso 1 · Elige un lugar
+
+Constanza tiene una **copia** de AlphaEarth de todos los años (carga al instante). Para los demás lugares, o tus propias coordenadas, se lee en vivo desde Source Cooperative: **alrededor de 1 minuto por año**."""),
+    code("""# @title El lugar { run: "auto" }
+lugar = "Constanza (laderas agrícolas)"  # @param ["Constanza (laderas agrícolas)", "Río Nizao, Los Cacaos (cauce)", "Cotuí (minería a cielo abierto)", "Juan Dolio (costa)", "Santiago (crecimiento urbano)"]
+anio_a, anio_b = 2017, 2025
+
+LAT, LON = pf.LUGARES_RD[lugar]
+bbox = pf.zona(LAT, LON, km=4)
+copia = "data/alphaearth/constanza_serie.npz" if lugar.startswith("Constanza") else None
+serie = pf.serie_alphaearth(bbox, (anio_a, anio_b), copia=copia)
+A, B = serie[anio_a], serie[anio_b]
+print(lugar, "· caja de 4 km ·", B.shape[1:], "píxeles")"""),
+    code("""rgb_s2, dia = pf.sentinel2_mediana(bbox, anio_b)   # foto real, escena más limpia de la estación seca
+fig, ax = plt.subplots(1, 3, figsize=(15, 5))
+ax[0].imshow(rgb_s2); ax[0].set_title(f"Sentinel-2 · {dia}")
+ax[1].imshow(ayuda.rgb_embeddings(A)); ax[1].set_title(f"AlphaEarth {anio_a}")
+ax[2].imshow(ayuda.rgb_embeddings(B)); ax[2].set_title(f"AlphaEarth {anio_b}")
+for a in ax: a.axis("off")
+plt.show()"""),
+    md("""**🧠 Para pensar:** en AlphaEarth, colores parecidos significan terrenos parecidos. ¿Reconoces el valle, el pueblo y las laderas en la foto de Sentinel-2?
+
+## Paso 2 y 3 · ¿Dónde cambió, y en qué pendiente?
+
+Comparamos la "huella" de cada píxel en los dos años: **0 = igual, cuanto más alto, más cambió**.
+Después calculamos la **pendiente** con el modelo de elevación **Copernicus GLO-30**, que es abierto y está en AWS.
+Un cambio fuerte en un terreno empinado es una **señal**: ahí conviene mirar primero, porque es donde la erosión hace más daño.
+El umbral de 0,15 deja pasar más o menos el 5 % de píxeles que más cambiaron. En Constanza casi todo el cambio está en el valle plano (rotación de cultivos); las señales aparecen en el borde de las laderas."""),
+    code("""# @title Umbrales { run: "auto" }
+UMBRAL_CAMBIO = 0.15     # @param {type:"slider", min:0.05, max:0.6, step:0.01}
+PENDIENTE_MIN = 10       # @param {type:"slider", min:0, max:45, step:1}
+
+cambio = pf.cambio(A, B)
+pendiente = pf.pendiente_grados(bbox, cambio.shape)
+senal = pf.señales_erosion(cambio, pendiente, UMBRAL_CAMBIO, PENDIENTE_MIN)
+
+fig, ax = plt.subplots(1, 3, figsize=(15, 5))
+im = ax[0].imshow(cambio, cmap="magma", vmin=0, vmax=0.5); ax[0].set_title(f"Cambio {anio_a}→{anio_b}"); plt.colorbar(im, ax=ax[0], shrink=0.7)
+im = ax[1].imshow(pendiente, cmap="cividis", vmin=0, vmax=40); ax[1].set_title("Pendiente (°)"); plt.colorbar(im, ax=ax[1], shrink=0.7)
+ax[2].imshow(pf.superponer(ayuda.rgb_embeddings(B), senal)); ax[2].set_title("Señales: cambio fuerte en ladera")
+for a in ax: a.axis("off")
+plt.show()
+pf.resumen(bbox, cambio, pendiente, senal, umbral_cambio=UMBRAL_CAMBIO)"""),
+    md("""## Paso 4 · Clasificar con ejemplos (como *Classify* de Google Earth)
+
+Le damos a la máquina **unos pocos ejemplos** de cada clase (fila, columna en la imagen) y un **Random Forest** aprende a reconocerlas usando los 64 números de AlphaEarth.
+Es exactamente lo que hace *Classify* en Google Earth, y la técnica con la que se mapean **tipos de cultivo** a escala de país.
+Los ejemplos de abajo son para Constanza. En la plataforma del paso 6 los marcas tú con clics."""),
+    code("""EJEMPLOS = pf.EJEMPLOS_CONSTANZA if lugar.startswith("Constanza") else []
+if EJEMPLOS:
+    etiquetas, clases = pf.clasificar(B, EJEMPLOS)
+    fig, ax = plt.subplots(1, 2, figsize=(12, 6))
+    ax[0].imshow(ayuda.rgb_embeddings(B))
+    for f, c, k in EJEMPLOS:
+        ax[0].scatter(c, f, s=40, color=pf.CLASES[k], edgecolor="black")
+    ax[0].set_title("Tus ejemplos")
+    ax[1].imshow(pf.colorear(etiquetas, clases)); ax[1].set_title("Clasificación de toda la zona")
+    for a in ax: a.axis("off")
+    plt.show()
+    display(pf.resumen(bbox, cambio, pendiente, senal, etiquetas, clases))
+else:
+    print("Para otros lugares, marca tus ejemplos en la plataforma del paso 6.")"""),
+    md(KEY_MD + """
+
+## Paso 5 · El informe
+Gemini convierte los números en un párrafo para alguien que no es técnico, sin inventar causas."""),
+    code("""cliente = ayuda.cliente_gemini()
+modelo = ayuda.elegir_modelo(cliente, "flash")
+datos = pf.resumen(bbox, cambio, pendiente, senal, *( (etiquetas, clases) if EJEMPLOS else (None, None) ))
+datos["lugar"] = lugar
+r = cliente.models.generate_content(model=modelo, contents=(
+    "Eres analista de riesgo ambiental en República Dominicana. Con estos números de un análisis satelital "
+    "automático (AlphaEarth + pendiente Copernicus), escribe 5 líneas en español sencillo: qué cambió, dónde "
+    "mirar primero y qué verificar en terreno. No inventes causas ni nombres; es una señal, no un diagnóstico.\\n"
+    + str(datos)))
+print(r.text)"""),
+    md("""## Paso 6 · 🚀 Tu plataforma
+
+La siguiente celda junta todo en una **app web** con Gradio. Al ejecutarla aparece un enlace `*.gradio.live` que puedes **compartir con quien quieras** durante 72 horas.
+1. Elige un lugar y pulsa **Cargar**.
+2. Elige una clase y **haz clic en la imagen de AlphaEarth** para marcar ejemplos (al menos 3 por clase).
+3. Pulsa **Clasificar** y mueve los umbrales.
+4. Pide el **informe** a Gemini."""),
+    code("""pf.app(copias={"Constanza (laderas agrícolas)": "data/alphaearth/constanza_serie.npz"})"""),
+    md("""## 🏁 Retos
+1. Cambia el año A a **2020** y el B a **2025** en la plataforma. ¿Las señales se concentran en los mismos sitios?
+2. En **Cotuí** o en el **río Nizao**, marca ejemplos de *Suelo desnudo* y *Agua*. ¿Qué parte de las señales es suelo expuesto hoy?
+3. Busca tu provincia con *Mis coordenadas* y comparte el enlace de tu plataforma en el chat del GDG.
+
+---
+**Fuentes y licencias.** AlphaEarth Foundations Satellite Embedding: Google DeepMind / Earth Engine, copia en Source Cooperative (CC BY 4.0).
+Copernicus DEM GLO-30 (© DLR/Airbus, licencia Copernicus, vía AWS Open Data). Sentinel-2 L2A: Copernicus (ESA/UE) vía Earth Search.
+Inspiración: Amazon Mining Watch (Earth Genome y aliados) y Google Earth *Classify*. Los resultados son señales para verificar en terreno, no diagnósticos."""),
+]
+
 if __name__ == "__main__":
     notebook(pista_a, "pista_A_huracan.ipynb")
     notebook(pista_b, "pista_B_satelite.ipynb")
+    notebook(pista_d, "pista_D_alphaearth.ipynb")

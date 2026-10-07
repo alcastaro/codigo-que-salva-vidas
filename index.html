@@ -27,9 +27,9 @@
   h2 { font-size: 28px; margin: 40px 0 16px; font-weight: 700; }
   .pistas { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px; }
   .pista { border: 2px solid var(--negro); border-radius: 24px; padding: 24px; display: flex; flex-direction: column; gap: 12px; }
-  .pista.a { background: var(--p-azul); } .pista.b { background: var(--p-verde); } .pista.c { background: var(--p-rojo); }
+  .pista.a { background: var(--p-azul); } .pista.b { background: var(--p-verde); } .pista.c { background: var(--p-rojo); } .pista.d { background: var(--p-amarillo); }
   .etq { align-self: flex-start; border: 2px solid var(--negro); border-radius: 999px; padding: 6px 18px; font-weight: 500; font-size: 15px; }
-  .a .etq { background: var(--h-azul); } .b .etq { background: var(--h-verde); } .c .etq { background: var(--h-rojo); }
+  .a .etq { background: var(--h-azul); } .b .etq { background: var(--h-verde); } .c .etq { background: var(--h-rojo); } .d .etq { background: var(--h-amarillo); }
   .pista h3 { margin: 0; font-size: 26px; }
   .pista ul { margin: 0; padding-left: 20px; }
   .pista .donde { font-family: var(--mono); font-weight: 300; font-size: 14px; }
@@ -50,7 +50,7 @@
     <span class="badge">Workshops @DevFest · Laboratorio</span>
     <h1>Código que salva vidas</h1>
     <p class="sub">Entendiendo Google Crisis Resilience · DevFest Santo Domingo 2026</p>
-    <p class="lead">Elige una pista. Las tres siguen al huracán Melissa (Jamaica, octubre de 2025), desde el pronóstico hasta la alerta. No necesitas saber programar ni crear un proyecto en la nube: solo una cuenta de Google.</p>
+    <p class="lead">Elige una pista. A, B y C siguen al huracán Melissa (Jamaica, octubre de 2025), desde el pronóstico hasta la alerta; D vigila la erosión en República Dominicana con AlphaEarth. No necesitas saber programar ni crear un proyecto en la nube: solo una cuenta de Google.</p>
   </section>
 
   <h2>Antes de empezar (2 minutos)</h2>
@@ -98,13 +98,25 @@
       <p class="donde">AI Studio · sirve desde el teléfono · 20 min</p>
       <a class="boton" href="https://github.com/alcastaro/codigo-que-salva-vidas/blob/main/taller/pista_C_ai_studio.md">Abrir la guía</a>
     </article>
+    <article class="pista d">
+      <span class="etq">D · AlphaEarth</span>
+      <h3>Tu plataforma de vigilancia satelital</h3>
+      <ul>
+        <li>Erosión y cambios del suelo en RD</li>
+        <li>Cambio 2017→2025 × pendiente</li>
+        <li>Clasifica con ejemplos, como Google Earth</li>
+        <li>Tu app web con Gradio, para compartir</li>
+      </ul>
+      <p class="donde">Google Colab · laptop · 20 min</p>
+      <a class="boton" href="https://colab.research.google.com/github/alcastaro/codigo-que-salva-vidas/blob/main/taller/pista_D_alphaearth.ipynb">Abrir en Colab</a>
+    </article>
   </div>
 
   <h2>Una advertencia</h2>
   <p class="aviso">Esto es una práctica con datos reales de investigación. Una alerta de verdad la emite una autoridad, la revisa una persona y se prueba con la comunidad. Para alertas reales, consulta siempre a tu servicio meteorológico nacional.</p>
 
   <footer>
-    Datos: Google DeepMind Weather Lab (CC BY 4.0) · NOAA/NHC · Google Flood Forecasting API · Copernicus Sentinel (ESA) vía Earth Search y Microsoft Planetary Computer · AlphaEarth Foundations (CC BY 4.0) vía Source Cooperative · Natural Earth.<br>
+    Datos: Google DeepMind Weather Lab (CC BY 4.0) · NOAA/NHC · Google Flood Forecasting API · Copernicus Sentinel (ESA) vía Earth Search y Microsoft Planetary Computer · Copernicus DEM GLO-30 · AlphaEarth Foundations (CC BY 4.0) vía Source Cooperative · Natural Earth.<br>
     Alberto Castillo Aroca · GDG Santo Domingo · <a href="https://github.com/alcastaro/codigo-que-salva-vidas">código en GitHub</a>
   </footer>
 </main>

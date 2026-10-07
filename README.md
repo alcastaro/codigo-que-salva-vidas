@@ -3,14 +3,15 @@
 Taller de **DevFest Santo Domingo 2026** (track Workshops, sala Laboratorio, nivel principiante, 40 min).
 Alberto Castillo Aroca · GDG Santo Domingo.
 
-Las tres pistas siguen al **huracán Melissa** (Jamaica, 28 de octubre de 2025), desde el pronóstico hasta la alerta,
-con productos de Google Crisis Resilience y datos abiertos. **No hace falta proyecto de Google Cloud ni Earth Engine.**
+Las pistas A, B y C siguen al **huracán Melissa** (Jamaica, 28 de octubre de 2025), desde el pronóstico hasta la alerta,
+con productos de Google Crisis Resilience y datos abiertos. La D construye una plataforma de vigilancia de erosión en RD con AlphaEarth, inspirada en Amazon Mining Watch. **No hace falta proyecto de Google Cloud ni Earth Engine.**
 
 | Pista | Qué se hace | Herramienta | Dónde |
 |---|---|---|---|
 | **A · Huracán** | 50 escenarios de Weather Lab, probabilidad de paso, Flood Hub, alerta con Gemini y Gemma | Colab | [`taller/pista_A_huracan.ipynb`](taller/pista_A_huracan.ipynb) |
 | **B · Satélite** | Sentinel-1/2 con STAC, agua nueva por radar, AlphaEarth (búsqueda por similitud), alerta | Colab | [`taller/pista_B_satelite.ipynb`](taller/pista_B_satelite.ipynb) |
 | **C · Alerta** | Instrucciones de sistema, salida estructurada CAP, Gemma, app con Build | AI Studio (sirve en el móvil) | [`taller/pista_C_ai_studio.md`](taller/pista_C_ai_studio.md) |
+| **D · AlphaEarth** | Erosión en RD: cambio 2017→2025 × pendiente, clasificación con ejemplos (como Google Earth *Classify*), plataforma Gradio | Colab | [`taller/pista_D_alphaearth.ipynb`](taller/pista_D_alphaearth.ipynb) |
 
 Portal para el QR: [`index.html`](index.html) (GitHub Pages). Deck: [`deck/codigo-que-salva-vidas.pptx`](deck/codigo-que-salva-vidas.pptx).
 
@@ -19,13 +20,13 @@ Portal para el QR: [`index.html`](index.html) (GitHub Pages). Deck: [`deck/codig
 | Min | Bloque | Diapositivas |
 |---|---|---|
 | 0–1 | Portada; pedir que escaneen el QR **ya** (Colab tarda ~30 s en instalar) | 1 |
-| 1–4 | El problema y el mapa de Crisis Resilience | 2–5 |
-| 4–6 | Pilar 1 · Telemetría distribuida (sismos con Android) | 6–8 |
-| 6–11 | Pilar 2 · Modelado predictivo (Flood Hub, WeatherNext, Sentinel, AlphaEarth) | 9–15 |
-| 11–13 | Pilar 3 · Despliegue a escala + casos Gemma 4 Good | 16–18 |
-| 13–14 | Elegir pista | 19 |
-| 14–37 | **Taller.** Facilitador: 3 min de demo guiada de cada pista en pantalla, luego circula | — |
-| 37–40 | Cierre | 20 |
+| 1–3 | El problema, Crisis Resilience y su mapa | 2–6 |
+| 3–4 | Pilar 1 · Telemetría distribuida (sismos con Android) | 7–9 |
+| 4–10 | Pilar 2 · Flood Hub, WeatherNext, Melissa, radar, AlphaEarth, Earth Engine, Google Earth, AMW, Climate Engine (~25 s por GIF) | 10–21 |
+| 10–12 | Pilar 3 · la alerta + casos Gemma 4 Good | 22–24 |
+| 12–13 | Elegir pista + QR | 25–27 |
+| 13–37 | **Taller.** Demo guiada de 2 min por pista; dejar la diapositiva del QR en pantalla | 27 |
+| 37–40 | Evento Climate Engine del GDG + cierre | 28–29 |
 
 **Plan B si cae la red:** todas las celdas pesadas tienen copia en `data/` y el interruptor `EN_VIVO` sale en `False`
 por defecto. El deck no necesita internet.
@@ -65,11 +66,13 @@ uv venv .venv && uv pip install --python .venv/bin/python -r requirements.txt
 | Sentinel-2 L2A | Copernicus (ESA/UE) vía Earth Search (Element 84) | Datos Copernicus libres y abiertos |
 | Sentinel-1 RTC | Copernicus (ESA/UE) vía Microsoft Planetary Computer | Datos Copernicus libres y abiertos |
 | Satellite Embedding (AlphaEarth Foundations) | Google DeepMind / Earth Engine, copia en Source Cooperative | **CC BY 4.0** |
+| Elevación (pendiente) | Copernicus DEM GLO-30 vía AWS Open Data | Licencia Copernicus DEM (© DLR/Airbus), uso libre con atribución |
 | Contornos de países | Natural Earth | Dominio público |
+| Capturas y GIF de plataformas | crisisresilience.google, Flood Hub, WeatherNext, Earth Engine, Google Earth, Amazon Mining Watch, Climate Engine | Capturas de pantalla para comentario educativo, con la fuente en cada diapositiva |
 | Diseño del deck | Sistema de diseño DevFest Santo Domingo / Google Developer Groups | Uso del capítulo |
 
 Cifras citadas en el deck (con la fuente en las notas de cada diapositiva): crisisresilience.google;
 Allen et al., *Science* (2025); Nearing et al., *Nature* (2024); blogs de Google DeepMind sobre WeatherNext 2,
-Melissa y AlphaEarth; anuncio de ganadores del Gemma 4 Good Challenge (blog de Google, 24-ago-2026).
+Melissa y AlphaEarth; anuncio de ganadores del Gemma 4 Good Challenge (blog de Google, 24-ago-2026); Google Earth AI (Google Research, 23-oct-2025); documentación de Google Earth *Classify*; Earth Genome, actualización de Amazon Mining Watch (agosto 2026); Climate Engine (DRI y Universidad de Idaho).
 
 **Aviso:** material didáctico. Para alertas reales, consulta a tu servicio meteorológico nacional.

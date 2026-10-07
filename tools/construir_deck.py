@@ -23,6 +23,9 @@ from pptx.util import Emu, Pt
 RAIZ = Path(__file__).resolve().parents[1]
 BRAND = RAIZ / "deck" / "brand" / "svg"
 FIG = RAIZ / "deck" / "figuras"
+CAPT = RAIZ / "deck" / "capturas"
+# Enlace del evento de Climate Engine en el GDG Santo Domingo. PROVISIONAL: página del capítulo.
+URL_EVENTO_CE = "https://gdg.community.dev/gdg-santo-domingo/"
 FONDOS = RAIZ / "deck" / "fondos"
 FONDOS.mkdir(parents=True, exist_ok=True)
 SALIDA = RAIZ / "deck" / "codigo-que-salva-vidas.pptx"
@@ -141,6 +144,13 @@ def fondos() -> dict[str, Path]:
         + grafico("double-slash-wide")
         + f'<circle cx="591" cy="92" r="58" fill="{PASTEL["amarillo"]}" stroke="{NEGRO}" stroke-width="2"/>'
         + f'<circle cx="872" cy="447" r="58" fill="{PASTEL["rojo"]}" stroke="{NEGRO}" stroke-width="2"/>')
+    puntos_v = "".join(f'<circle cx="{714 + i * 84}" cy="455" r="32" fill="{CORE["verde"]}" stroke="{NEGRO}" stroke-width="2"/>' for i in range(3))
+    f["statement_verde"] = svg_a_png(
+        "statement_verde",
+        grafico("scallop-bracket-left") + grafico("scallop-bracket-right", 0, 0)
+        + grafico("track-badge", 622, 0, {'font-size="26">Track': 'font-size="21.5">Comunidad', "Editable Location": "Santo Domingo",
+                                          PASTEL["azul"]: CORE["verde"]})
+        + puntos_v, fondo=PASTEL["verde"])
     for nombre, img in [("foto_melissa", "melissa_ensamble.png"), ("foto_alphaearth", "alphaearth_cuadro.png"),
                         ("foto_radar", "radar_cuadro.png")]:
         if (FIG / img).exists():
@@ -327,20 +337,72 @@ class Deck:
             caja_texto(sl, 37, 410, 880, 80, pie, fuente=MONO_LIGHT, px=21, interlineado=1.15)
         return sl
 
+    def pantalla(self, titulo, captura, puntos, credito, notas="", ancho_img=620):
+        """Captura o GIF de una plataforma (esquinas de 18 px, contorno de 2 px) con puntos clave a la derecha."""
+        sl = self.nueva("chart", notas)
+        caja_texto(sl, 37, 30, 880, 50, [titulo], px=33)
+        ruta = CAPT / captura
+        from PIL import Image
+        with Image.open(ruta) as im:
+            w0, h0 = im.size
+        w = ancho_img
+        h = w * h0 / w0
+        if h > 390:
+            h, w = 390, 390 * w0 / h0
+        pic = sl.shapes.add_picture(str(ruta), Emu(37 * PX), Emu(104 * PX), Emu(int(w * PX)), Emu(int(h * PX)))
+        geom = pic._element.spPr.find(qn("a:prstGeom"))
+        geom.set("prst", "roundRect")
+        av = geom.find(qn("a:avLst"))
+        if av is None:
+            av = geom.makeelement(qn("a:avLst"), {})
+            geom.append(av)
+        av.append(av.makeelement(qn("a:gd"), {"name": "adj", "fmla": f"val {int(18 / min(w, h) * 100000)}"}))
+        pic.line.color.rgb = rgb(NEGRO)
+        pic.line.width = Pt(1.5)
+        x = 37 + w + 28
+        viñetas(sl, x, 110, 923 - x, 330, puntos, px=21)
+        caja_texto(sl, 37, 104 + h + 10, w, 24, [credito], fuente=MONO_LIGHT, px=13)
+        return sl
+
+    def evento(self, lider, resto, qr_png, url_corta, notas=""):
+        sl = self.nueva("statement_verde", notas)
+        caja_texto(sl, 152, 110, 400, 320, [[(lider, True), (resto, False)]], px=33, interlineado=1.15,
+                   ancla=MSO_ANCHOR.MIDDLE)
+        sl.shapes.add_picture(str(qr_png), Emu(690 * PX), Emu(160 * PX), Emu(200 * PX), Emu(200 * PX))
+        caja_texto(sl, 640, 368, 300, 40, [url_corta], fuente=MONO_LIGHT, px=14, alinear=PP_ALIGN.CENTER)
+
+    def qr_grande(self, titulo, qr_png, url, notas=""):
+        sl = self.nueva("chart", notas)
+        caja_texto(sl, 37, 30, 880, 50, [titulo], px=33)
+        sl.shapes.add_picture(str(qr_png), Emu(340 * PX), Emu(110 * PX), Emu(280 * PX), Emu(280 * PX))
+        caja_texto(sl, 180, 410, 600, 40, [url], fuente=MONO_LIGHT, px=21, alinear=PP_ALIGN.CENTER)
+
     def guardar(self):
         self.p.save(SALIDA)
         print("escrito", SALIDA.relative_to(RAIZ), "·", len(self.p.slides), "diapositivas")
 
 
 # ============================================================================ contenido
+def qr_png(url: str, nombre: str) -> Path:
+    import qrcode
+    q = qrcode.QRCode(border=1, box_size=20, error_correction=qrcode.constants.ERROR_CORRECT_M)
+    q.add_data(url)
+    q.make(fit=True)
+    ruta = FIG / f"qr_{nombre}.png"
+    q.make_image(fill_color=NEGRO, back_color=BLANCO).save(str(ruta))
+    return ruta
+
+
 def construir():
     d = Deck(fondos())
+    PORTAL = "alcastaro.github.io/codigo-que-salva-vidas"
 
+    # ------------------------------------------------------------------ apertura
     d.titulo(["Código que", "salva vidas"],
              ["Alberto Castillo Aroca", "Tech Lead en contextos de crisis"],
              "Presentación (30 s). Organizador del GDG Santo Domingo, Google.org Gen AI Accelerator. "
              "Hoy: qué construye Google para crisis y, sobre todo, lo tocamos con las manos. "
-             "Pide que escaneen el QR del final desde ya: el notebook tarda ~30 s en instalar.")
+             "Pide que escaneen el QR desde ya: el notebook tarda ~30 s en instalar.")
 
     d.frase("En una crisis", " no faltan datos: sobra ruido, y lo que se sabe no llega a quien lo necesita.",
             "El problema no es la falta de datos sino la asimetría y el ruido. Todo lo que veremos son "
@@ -351,23 +413,29 @@ def construir():
              "más de 150 países. Otras cifras de la misma página: alertas sísmicas en 95+ países, alianzas de "
              "alertas en 90+ países, 10 millones de conexiones diarias con información de crisis (promedio 2025).")
 
+    d.pantalla("crisisresilience.google", "crisis.gif", [
+        "Incendios", "Inundaciones", "Sismos", "Ciclones y clima", "Alertas en 90+ países",
+    ], "crisisresilience.google · captura oct-2026",
+        "El portal que reúne todo. 'Nadie debería ser sorprendido por un desastre natural'. Recorrer rápido "
+        "(20 s): los cinco frentes y las historias de socios (GiveDirectly en Nigeria, WeatherNext y Melissa).")
+
     d.portafolio("Google Crisis Resilience: el mapa", [
         ("Sismos", "rojo", ["Android\nEarthquake Alerts", "Red de acelerómetros\nen teléfonos", "Alertas en\n98 países"]),
         ("Inundaciones", "azul", ["Flood Hub", "Flood Forecasting\nAPI", "150+ países,\nríos sin estaciones"]),
         ("Ciclones y clima", "amarillo", ["WeatherNext 2", "Weather Lab\n(ciclones)", "Hasta 15 días,\nprobabilístico"]),
         ("Incendios", "verde", ["Límites de incendio\nen Search y Maps", "FireSat\n(constelación)", "Detección de\n5×5 m en 20 min"]),
-    ], "Cuatro amenazas, una lógica. Todos estos productos comparten capas: datos de satélite, modelos de "
-       "IA y un canal de alertas (SOS Alerts / Public Alerts en Search, Maps y Android). "
-       "Fuentes: crisisresilience.google; research.google (FireSat, boundary tracking).")
+    ], "Cuatro amenazas, una lógica. Todos comparten capas: satélite, modelos de IA y un canal de alertas "
+       "(SOS Alerts / Public Alerts en Search, Maps y Android). Fuentes: crisisresilience.google; research.google.")
 
     d.portafolio("Las capas que lo sostienen todo", [
-        ("Observar", "verde", ["AlphaEarth\nFoundations", "Earth Engine", "Sentinel / Landsat\n(datos abiertos)"]),
-        ("Predecir", "azul", ["Modelos LSTM\n(Flood Hub)", "WeatherNext 2", "Modelos de\nensamble"]),
+        ("Observar", "verde", ["AlphaEarth\nFoundations", "Earth Engine\ny Google Earth", "Sentinel / Landsat\n(datos abiertos)"]),
+        ("Predecir", "azul", ["Modelos LSTM\n(Flood Hub)", "WeatherNext 2", "Earth AI\n(Gemini)"]),
         ("Avisar", "rojo", ["SOS Alerts", "Public Alerts\n(estándar CAP)", "Android, Search\ny Maps"]),
         ("Construir", "amarillo", ["Gemini API\n(AI Studio)", "Gemma\n(modelos abiertos)", "Colab"]),
-    ], "Esta es la vista para developers: qué puedo usar yo. En el taller tocamos Observar (Sentinel, "
-       "AlphaEarth), Predecir (Weather Lab, Flood Hub) y Construir (Gemini, Gemma, Colab, AI Studio).")
+    ], "La vista para developers: qué puedo usar yo. En el taller tocamos Observar (Sentinel, AlphaEarth), "
+       "Predecir (Weather Lab, Flood Hub) y Construir (Gemini, Gemma, Colab, AI Studio).")
 
+    # ------------------------------------------------------------------ pilar 1
     d.seccion("01", ["Telemetría", "distribuida"], ["Millones de teléfonos", "funcionando como", "sismógrafos"],
               "Pilar 1. El acelerómetro que gira tu pantalla también siente un sismo.")
 
@@ -380,68 +448,122 @@ def construir():
     ], ["Funciona porque las ondas viajan a unos km/s y los datos a la velocidad de la luz.",
         "Fuente: Allen et al., Science (julio 2025)."],
         "Arquitectura: detección en el borde (on-device) + agregación en la nube. El teléfono no manda la "
-        "señal cruda, solo un disparo con ubicación gruesa: privacidad y ancho de banda. El servidor confirma "
-        "cuando muchos teléfonos coinciden, estima magnitud y ubicación, y define a quién alertar.")
+        "señal cruda, solo un disparo con ubicación gruesa: privacidad y ancho de banda.")
 
     d.numero("recibió la alerta", "36 %", "antes de sentir la sacudida",
-             "Science (2025), 'Global earthquake detection and warning using Android phones': alertas en 98 "
-             "países para M≥4.5, ~60 eventos y 18 millones de alertas al mes; 85 % de quienes recibieron alerta "
-             "sintieron el sismo; 36 % la recibió antes, 28 % durante y 23 % después de la sacudida.")
+             "Science (2025): alertas en 98 países para M≥4.5, ~60 eventos y 18 millones de alertas al mes; 85 % "
+             "de quienes recibieron alerta sintieron el sismo; 36 % la recibió antes, 28 % durante y 23 % después.")
 
+    # ------------------------------------------------------------------ pilar 2
     d.seccion("02", ["Modelado", "predictivo"], ["Del satélite y la", "lluvia, al río y", "al huracán"],
-              "Pilar 2. Aquí entra la IA de verdad: Flood Hub, WeatherNext y AlphaEarth.")
+              "Pilar 2. Aquí entra la IA de verdad: Flood Hub, WeatherNext, AlphaEarth y Earth Engine.")
 
-    d.vinetas("Flood Hub: ríos que avisan", [
-        "Dos redes LSTM: el pasado y el pronóstico",
-        "Funciona en ríos sin estaciones",
-        "Hasta 7 días de anticipación",
-        "API pública con lista de espera",
-    ], "Nature (2024), 'Global prediction of extreme floods in ungauged watersheds'. Un LSTM 'hindcast' lee un "
-       "año de clima histórico; otro LSTM 'forecast' toma ese estado y 7 días de pronóstico meteorológico. "
-       "En ríos sin medición logra a 5 días una fiabilidad similar o mejor que la de los sistemas globales "
-       "actuales en el mismo día. La Flood Forecasting API exige key aprobada y uso no comercial: en el taller "
-       "uso mi key y comparto una copia.", sub="sites.research.google/floods")
+    d.pantalla("Flood Hub: ríos que avisan", "floodhub.gif", [
+        "Dos redes LSTM: pasado y pronóstico",
+        "Ríos sin estaciones de medición",
+        "Hasta 7 días antes",
+        "API con lista de espera",
+    ], "sites.research.google/floods · captura oct-2026",
+        "Nature (2024), 'Global prediction of extreme floods in ungauged watersheds'. Un LSTM 'hindcast' lee un "
+        "año de clima; otro LSTM 'forecast' toma ese estado y 7 días de pronóstico meteorológico. La API exige key "
+        "aprobada y uso no comercial: en el taller uso mi key y comparto una copia.")
 
-    d.foto("foto_melissa", ["WeatherNext 2"], [
+    d.pantalla("WeatherNext 2", "weathernext.gif", [
         "8× más rápido",
         "Mejor en 99,9 % de variables",
         "Hasta 15 días, por hora",
-        "Weather Lab: 50 escenarios",
-    ], "WeatherNext 2 (Google DeepMind, nov-2025): pronósticos 8× más rápidos, supera a la versión anterior en "
-       "99,9 % de variables y plazos, hasta 15 días. Datos en Earth Engine y BigQuery; inferencia en Vertex AI. "
-       "La imagen: los 50 escenarios del modelo experimental de ciclones de Weather Lab para Melissa, emitidos "
-       "el 25-oct-2025 (azul), y la trayectoria real del NHC (rojo). Esto lo reproducen en la Pista A.",
-       credito="Weather Lab (CC BY 4.0) · NOAA/NHC · Natural Earth")
+        "En Earth Engine, BigQuery y Vertex AI",
+    ], "deepmind.google/science/weathernext · captura oct-2026",
+        "WeatherNext 2 (Google DeepMind, nov-2025): 8× más rápido, supera a la versión anterior en 99,9 % de "
+        "variables y plazos, hasta 15 días. Datos en Earth Engine y BigQuery; inferencia en Vertex AI.")
+
+    d.pantalla("Melissa: 50 futuros posibles", "melissa_animado.gif", [
+        "Weather Lab, emitido el 25-oct",
+        "Azul: escenarios del modelo",
+        "Rojo: lo que pasó (NHC)",
+        "Esto lo haces en la Pista A",
+    ], "Weather Lab (CC BY 4.0) · NOAA/NHC · Natural Earth · animación propia",
+        "Weather Lab (deepmind.google.com/science/weatherlab) ahora pide iniciar sesión, así que la animación está "
+        "hecha con sus CSV públicos. Cada línea azul es un escenario del modelo experimental de ciclones; la roja, "
+        "el best track del NHC. Pausa aquí: '¿el abanico contiene la línea roja?'.")
 
     d.numero("Cinco días antes:", "80 %", "de confianza en categoría 5",
-             "DeepMind (mayo 2026): WeatherNext predijo una llegada a Jamaica con fuerza de categoría 5 cinco días "
-             "antes con 80 % de confianza, casi 100 % tres días antes. Según el informe de verificación del NHC, "
-             "fue el mejor modelo individual de trayectoria e intensidad de la temporada 2025. Melissa tocó tierra "
-             "el 28-oct-2025 con 160 nudos (best track NHC), la más fuerte registrada en Jamaica.")
+             "DeepMind (mayo 2026): WeatherNext predijo la llegada a Jamaica con fuerza de categoría 5 cinco días "
+             "antes con 80 % de confianza, casi 100 % tres días antes. Mejor modelo individual de trayectoria e "
+             "intensidad de 2025 según el NHC. Melissa tocó tierra el 28-oct-2025 con 160 nudos.")
 
-    if "foto_radar" in d.f:
-        d.foto("foto_radar", ["Sentinel-1:", "radar"], [
-            "Ve a través de nubes",
-            "Funciona de noche",
-            "Agua quieta = oscuro",
-            "Datos abiertos (Copernicus)",
-        ], "No es de Google, pero es la materia prima: los satélites Sentinel del programa Copernicus son "
-           "abiertos. Durante Melissa (25 y 28 de octubre) las imágenes ópticas tenían 100 % de nubes; el radar "
-           "no. Imagen: Black River el 29-oct-2025, ~30 h tras la llegada a tierra; en celeste, agua nueva "
-           "respecto al 17-oct (misma órbita). Ojo: el mar picado también da falsos positivos. Pista B.",
-           credito="Copernicus Sentinel-1 (ESA) · Microsoft Planetary Computer")
+    d.pantalla("Sentinel-1: el radar ve bajo las nubes", "radar_parpadeo.gif", [
+        "Atraviesa nubes, de día y de noche",
+        "Agua quieta = oscuro",
+        "Antes 17-oct · después 29-oct",
+        "Datos abiertos (Copernicus)",
+    ], "Copernicus Sentinel-1 (ESA) · Microsoft Planetary Computer · animación propia",
+        "No es de Google, pero es la materia prima. Durante Melissa las imágenes ópticas tenían 100 % de nubes. "
+        "Black River (Jamaica), misma órbita antes y después; en celeste, agua nueva. Pista B.", ancho_img=420)
 
     d.foto("foto_alphaearth", ["AlphaEarth", "Foundations"], [
         "64 números por píxel",
         "Busca sin entrenar",
         "Anual, 2017–2025",
         "Abierto y gratuito",
-    ], "AlphaEarth Foundations (Google DeepMind, jul-2025): resume observaciones de muchos sensores en un "
-       "embedding de 64 dimensiones por píxel de 10 m; más de 1,4 billones de huellas al año; 24 % menos error "
-       "que los modelos comparados. Imagen: Black River (Jamaica). En rojo, todo lo que 'se parece' al centro "
-       "del pueblo (similitud > 0,9) — encuentra los asentamientos sin entrenar ningún modelo. Pista B.",
+    ], "AlphaEarth Foundations (DeepMind, jul-2025): embedding de 64 dimensiones por píxel de 10 m; más de 1,4 "
+       "billones de huellas al año; 24 % menos error que los modelos comparados. En rojo, todo lo que 'se parece' "
+       "al centro de Black River (similitud > 0,9): encuentra los asentamientos sin entrenar nada. Pistas B y D.",
        credito="AlphaEarth Foundations (CC BY 4.0) · Source Cooperative")
 
+    if (CAPT / "alphaearth_constanza.gif").exists():
+        d.pantalla("AlphaEarth: Constanza, 2017 → 2025", "alphaearth_constanza.gif", [
+            "Un color por tipo de terreno",
+            "Derecha: cuánto cambió",
+            "Cultivos en laderas",
+            "Esto lo haces en la Pista D",
+        ], "AlphaEarth Foundations (CC BY 4.0) vía Source Cooperative · animación propia",
+            "Misma proyección de color para todos los años, para que sean comparables. Constanza: agricultura "
+            "intensiva en un valle de montaña. Las zonas claras a la derecha cambiaron respecto a 2017. Es una señal "
+            "para revisar, no un diagnóstico de erosión.")
+
+    d.pantalla("Earth Engine: 40 años de Santo Domingo", "timelapse_sdq.gif", [
+        "Petabytes de satélite y clima",
+        "Análisis en la nube, en minutos",
+        "Gratis para uso no comercial",
+        "Base de Timelapse y Climate Engine",
+    ], "earthengine.google.com/timelapse · captura oct-2026",
+        "Earth Engine es la plataforma: catálogo de datos + cómputo. Timelapse muestra 1984–2022. El catálogo incluye "
+        "el Satellite Embedding de AlphaEarth. En el taller no lo usamos para no obligar a crear un proyecto de Cloud.")
+
+    d.pantalla("Novedades de Google Earth", "googleearth.gif", [
+        "Earth AI: imagen, población y entorno",
+        "Gemini razona sobre el mapa",
+        "Classify: cultivos con AlphaEarth",
+        "Pro y AI Pro, primero en EE. UU.",
+    ], "earth.google.com · captura oct-2026",
+        "Google Earth AI (oct-2025): modelos de Imagery, Population y Environment + un agente de Geospatial Reasoning "
+        "con Gemini (0,82 de exactitud frente a 0,50 de Gemini 2.5 Pro solo). En Google Earth: 'Ask Google Earth' "
+        "con Gemini y Classify (experimental), que con ≥3 ejemplos por clase y AlphaEarth clasifica cada 10 m con un "
+        "Random Forest. Disponibilidad inicial: Google Earth Professional y Google AI Pro en EE. UU.")
+
+    d.pantalla("Amazon Mining Watch", "amw.gif", [
+        "Minería de oro en 9 países",
+        "Redes neuronales sobre Sentinel-2",
+        "99 % especificidad, 90 % sensibilidad",
+        "Datos abiertos, cada trimestre",
+    ], "amazonminingwatch.org (Earth Genome y aliados) · captura oct-2026",
+        "Earth Genome con Amazon Conservation, la Fundación Moore, Pulitzer Center y organizaciones indígenas. "
+        "Actualización de agosto 2026: nuevo ensamble de CNN sobre Sentinel-2 en cuadros de 480 m, segmentación con "
+        "SAM2, datos 2018–2026 T2; 1,149 millones de hectáreas afectadas. Datos en Source Cooperative. Es el modelo "
+        "de la Pista D: vigilar cambios del suelo y priorizar dónde mirar.")
+
+    d.pantalla("Climate Engine", "climateengine.png", [
+        "Clima y satélite sin código",
+        "Corre sobre Earth Engine",
+        "Sequía, incendios y cultivos",
+        "Web, API e informes",
+    ], "climateengine.org · captura oct-2026",
+        "Climate Engine: aplicación de Desert Research Institute y Universidad de Idaho con Google, sobre Earth "
+        "Engine. Procesa en segundos 30+ años de Landsat y datos climáticos para sequía, uso de agua, agricultura e "
+        "incendios; resultados descargables y compartibles por enlace. Puente al anuncio del evento del GDG.")
+
+    # ------------------------------------------------------------------ pilar 3
     d.seccion("03", ["Despliegue", "a escala"], ["Cuando la", "infraestructura", "física colapsa"],
               "Pilar 3. La mejor predicción del mundo no sirve si no llega y no se entiende.")
 
@@ -450,42 +572,55 @@ def construir():
         "Alertas oficiales con estándar CAP",
         "Límites de incendio cada 10–15 min",
         "Si no se entiende en 3 s, no sirve",
-    ], "SOS Alerts reúne información de autoridades y la destaca en Search y Maps. Public Alerts recibe "
-       "alertas oficiales en CAP (Common Alerting Protocol): severidad, urgencia y certeza son campos del "
-       "estándar. Los límites de incendio se estiman con IA sobre imágenes satelitales (1 km², cada 10–15 min). "
-       "En el taller, Gemini redacta alertas con esos campos CAP.")
+    ], "SOS Alerts reúne información de autoridades en Search y Maps. Public Alerts recibe alertas oficiales en "
+       "CAP (Common Alerting Protocol): severidad, urgencia y certeza son campos del estándar. En el taller, Gemini "
+       "redacta alertas con esos campos.")
 
     d.portafolio("La comunidad también construye: Gemma 4 Good", [
         ("Acuífero·Vigía", "azul", ["Alerta de inundación\nsin internet", "Gemma 4 E2B en\nRaspberry Pi 5", "Sudamérica ·\nGlobal Resilience"]),
         ("PreVillage", "verde", ["Servicios públicos\npor WhatsApp", "Gemma 4 E4B en\nRaspberry Pi 5", "Nepal ·\npremio llama.cpp"]),
         ("Gilbeot", "amarillo", ["Navegación con\npuntos de referencia", "Gemma 4 E2B\nen Android", "Personas mayores ·\npremio LiteRT"]),
-    ], "Gemma 4 Good Challenge (Kaggle + Google DeepMind), ganadores anunciados el 24-ago-2026, 1.600+ "
-       "proyectos. Acuífero·Vigía ganó el premio Global Resilience: alerta temprana de inundaciones offline que "
-       "fusiona telemetría, audio de voluntarios y cámaras de río, con rastro de razonamiento auditable. "
-       "Mensaje: lo que Google hace a escala planetaria, la comunidad lo lleva al borde, donde no hay señal.")
+    ], "Gemma 4 Good Challenge (Kaggle + Google DeepMind), ganadores anunciados el 24-ago-2026, 1.600+ proyectos. "
+       "Lo que Google hace a escala planetaria, la comunidad lo lleva al borde, donde no hay señal.")
 
-    d.seccion("04", ["Manos", "a la obra"], ["Elige tu pista:", "huracán, satélite", "o alerta"],
-              "Taller (25 min). Todos abren el portal del QR. Recordar: no hace falta proyecto de Google Cloud.")
+    # ------------------------------------------------------------------ taller
+    d.seccion("04", ["Manos", "a la obra"], ["Elige tu pista:", "huracán, satélite,", "alerta o AlphaEarth"],
+              "Taller (25 min). Todos abren el portal del QR. No hace falta proyecto de Google Cloud.")
 
-    def qr(sl):
-        sl.shapes.add_picture(str(FIG / "qr_portal.png"), Emu(742 * PX), Emu(150 * PX), Emu(180 * PX), Emu(180 * PX))
-        caja_texto(sl, 722, 344, 220, 120, ["alcastaro.github.io/", "codigo-que-salva-vidas"],
-                   fuente=MONO_LIGHT, px=16, alinear=PP_ALIGN.CENTER)
+    d.pantalla("Pista D: tu plataforma satelital", "plataforma_app.gif", [
+        "Cambio 2017→2025 con AlphaEarth",
+        "× pendiente Copernicus",
+        "Clic para dar ejemplos",
+        "Enlace público con Gradio",
+    ], "Plataforma del taller (Gradio en Colab) · Constanza, RD",
+        "La idea de Amazon Mining Watch y de Classify, en 25 minutos y para RD. Cambio fuerte en terreno empinado = "
+        "señal para revisar, no diagnóstico. En Constanza el cambio está sobre todo en el valle (rotación de "
+        "cultivos); las señales aparecen en el borde de las laderas. Código escrito desde cero para el taller.")
+
     d.portafolio("Elige tu pista", [
         ("A · Huracán", "azul", ["Weather Lab:\n50 escenarios", "Flood Hub:\nríos en alerta", "Gemini: la alerta"]),
-        ("B · Satélite", "verde", ["Sentinel-1 y 2\ncon STAC", "AlphaEarth:\nbuscar parecidos", "Gemini: la alerta"]),
+        ("B · Satélite", "verde", ["Sentinel-1 y 2\ncon STAC", "Radar: agua\nbajo las nubes", "AlphaEarth:\nexposición"]),
         ("C · Alerta", "rojo", ["AI Studio,\nsin código", "Formato CAP\ny Gemma", "Build: tu app"]),
-    ], "A y B: Google Colab (laptop). C: AI Studio, funciona desde el teléfono. Todas necesitan solo una "
-       "cuenta de Google. Key de Gemini gratis en aistudio.google.com/apikey, guardada en Secretos de Colab "
-       "(nunca pegada en una celda).", ancho_util=670, extra=qr)
+        ("D · AlphaEarth", "amarillo", ["Erosión en RD:\ncambio y pendiente", "Clasifica con\nejemplos", "Tu plataforma\n(Gradio)"]),
+    ], "A, B y D: Google Colab (laptop). C: AI Studio, funciona desde el teléfono. Key de Gemini gratis en "
+       "aistudio.google.com/apikey, guardada en Secretos de Colab (nunca pegada en una celda).")
+
+    d.qr_grande("Escanea y elige tu pista", FIG / "qr_portal.png", PORTAL,
+                "Dejar esta diapositiva en pantalla durante el taller.")
+
+    d.evento("Próximamente en el GDG Santo Domingo:",
+             " un taller de Climate Engine para analizar clima y satélite sin código.",
+             qr_png(URL_EVENTO_CE, "evento_ce"), URL_EVENTO_CE.replace("https://", "").rstrip("/"),
+             "Anuncio del evento de Climate Engine del GDG Santo Domingo. ⚠️ El QR apunta de forma provisional a la "
+             "página del capítulo; cambiar URL_EVENTO_CE en tools/construir_deck.py por el enlace del evento.")
 
     d.vinetas("Llévatelo a casa", [
         "Notebooks y guía en el portal del QR",
         "Datos abiertos, con su licencia citada",
         "Alertas reales: tu servicio meteorológico",
         "¿Construyes algo? Cuéntaselo al GDG",
-    ], "Cierre. Lo que vimos es investigación y práctica: las alertas reales las emite una autoridad. "
-       "Invitar a seguir en el GDG Santo Domingo.", sub="Gracias · Código que salva vidas · DevFest Santo Domingo 2026")
+    ], "Cierre. Lo que vimos es investigación y práctica: las alertas reales las emite una autoridad.",
+        sub="Gracias · Código que salva vidas · DevFest Santo Domingo 2026")
 
     d.guardar()
 

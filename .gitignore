@@ -12,3 +12,5 @@ deck/render/
 deck/fonts/var/
 deck/fondos/*.html
 deck/brand/examples/
+.playwright-cli/
+*.webm

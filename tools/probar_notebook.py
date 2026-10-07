@@ -42,6 +42,9 @@ fallos = 0
 for i, c in enumerate(nb.cells):
     if c.cell_type != "code":
         continue
+    if "pf.app(" in c.source:
+        print(f"[{i}] (salto: lanza la app; se prueba aparte)")
+        continue
     if not hay_key and ("cliente" in c.source):
         print(f"[{i}] (salto: necesita GOOGLE_API_KEY)")
         continue
