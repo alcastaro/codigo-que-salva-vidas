@@ -184,7 +184,7 @@ def app(copias: dict | None = None, compartir: bool = True):
         datos = resumen(estado["bbox"], estado["cambio"], estado["pendiente"], estado.get("senal", señales_erosion(estado["cambio"], estado["pendiente"])),
                         estado.get("etiquetas"), estado.get("clases"))
         datos["lugar"] = estado.get("lugar")
-        r = cli.models.generate_content(model=modelo, contents=(
+        r = ayuda.generar(cli, modelo, (
             "Eres analista de riesgo ambiental en República Dominicana. Con estos números de un análisis "
             "satelital automático (AlphaEarth + pendiente Copernicus), escribe 5 líneas en español sencillo: "
             "qué cambió, dónde mirar primero y qué verificar en terreno. No inventes causas ni nombres; "

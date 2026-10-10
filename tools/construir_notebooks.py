@@ -427,7 +427,7 @@ Gemini convierte los números en un párrafo para alguien que no es técnico, si
 modelo = ayuda.elegir_modelo(cliente, "flash")
 datos = pf.resumen(bbox, cambio, pendiente, senal, *( (etiquetas, clases) if EJEMPLOS else (None, None) ))
 datos["lugar"] = lugar
-r = cliente.models.generate_content(model=modelo, contents=(
+r = ayuda.generar(cliente, modelo, (
     "Eres analista de riesgo ambiental en República Dominicana. Con estos números de un análisis satelital "
     "automático (AlphaEarth + pendiente Copernicus), escribe 5 líneas en español sencillo: qué cambió, dónde "
     "mirar primero y qué verificar en terreno. No inventes causas ni nombres; es una señal, no un diagnóstico.\\n"

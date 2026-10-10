@@ -9,6 +9,7 @@ Fuentes y licencias en el README del repositorio.
 from __future__ import annotations
 
 import json
+import logging
 import math
 import os
 import urllib.request
@@ -21,6 +22,8 @@ REPO_RAW = os.environ.get(
     "TALLER_RAW", "https://raw.githubusercontent.com/alcastaro/codigo-que-salva-vidas/main"
 )
 CACHE = Path(os.environ.get("TALLER_CACHE", "datos_taller"))
+# La librería de Gemini avisa en inglés sobre una función que no usamos; para principiantes es solo ruido.
+logging.getLogger("google_genai.models").setLevel(logging.ERROR)
 
 # Lugares de ejemplo. (lat, lon) en grados decimales.
 LUGARES = {
@@ -343,15 +346,38 @@ def cliente_gemini():
     return genai.Client(api_key=key)
 
 
+PREFERIDOS = {
+    # Alias estables con cuota gratuita (verificados el 10-oct-2026). Ordenar por nombre NO sirve:
+    # elegía modelos sin cuota gratuita (error 429).
+    "flash": ["gemini-flash-latest", "gemini-flash-lite-latest", "gemini-2.5-flash"],
+    "gemma": ["gemma-4-26b-a4b-it", "gemma-4-31b-it"],
+}
+
+
 def elegir_modelo(cliente, familia: str = "flash") -> str:
-    """Elige el modelo más reciente de una familia ('flash', 'pro' o 'gemma') disponible para tu key."""
-    nombres = [m.name.split("/")[-1] for m in cliente.models.list()
-               if "generateContent" in (m.supported_actions or [])]
-    candidatos = [n for n in nombres if familia in n and "preview" not in n and "tts" not in n
-                  and "image" not in n and "live" not in n and "lite" not in n]
-    if not candidatos:
-        candidatos = [n for n in nombres if familia in n]
-    return sorted(candidatos)[-1] if candidatos else "gemini-2.5-flash"
+    """Primer modelo de la lista de preferidos que tu key tiene disponible."""
+    nombres = {m.name.split("/")[-1] for m in cliente.models.list()}
+    for n in PREFERIDOS.get(familia, []):
+        if n in nombres:
+            return n
+    return PREFERIDOS.get(familia, ["gemini-flash-latest"])[0]
+
+
+def generar(cliente, modelo: str, contents, config=None, intentos: int = 4):
+    """generate_content con reintentos (503 saturado, 429 límite por minuto) y respaldo al modelo lite."""
+    import time
+    respaldo = {"gemini-flash-latest": "gemini-flash-lite-latest"}
+    ultimo = None
+    for k in range(intentos):
+        m = modelo if k < intentos - 1 else respaldo.get(modelo, modelo)
+        try:
+            return cliente.models.generate_content(model=m, contents=contents, config=config)
+        except Exception as e:  # noqa: BLE001
+            ultimo = e
+            if not any(c in str(e) for c in ("429", "503", "500", "UNAVAILABLE", "RESOURCE_EXHAUSTED")):
+                raise
+            time.sleep(4 * (k + 1))
+    raise ultimo
 
 
 INSTRUCCION_ALERTA = """Eres el redactor de alertas de una oficina de protección civil del Caribe.
@@ -381,14 +407,16 @@ def redactar_alerta(cliente, modelo: str, datos_tecnicos: dict) -> dict:
     }
     contenido = "Datos técnicos:\n" + json.dumps(datos_tecnicos, ensure_ascii=False, default=str, indent=1)
     if "gemma" in modelo:  # Gemma no admite instrucción de sistema ni esquema: va todo en el texto
-        r = cliente.models.generate_content(
-            model=modelo,
-            contents=INSTRUCCION_ALERTA + "\nResponde SOLO con un JSON con las claves "
-            + ", ".join(esquema["required"]) + ".\n\n" + contenido)
+        r = generar(
+            cliente, modelo,
+            INSTRUCCION_ALERTA + "\nResponde SOLO con un JSON con las claves "
+            + ", ".join(esquema["required"]) + ". 'que_hacer' es una lista de frases cortas. "
+            + "severidad: Extreme|Severe|Moderate|Minor|Unknown; urgencia: Immediate|Expected|Future|Past|Unknown; "
+            + "certeza: Observed|Likely|Possible|Unlikely|Unknown (en inglés, tal cual).\n\n" + contenido)
         texto = r.text.strip().removeprefix("```json").removeprefix("```").removesuffix("```")
         return json.loads(texto)
-    r = cliente.models.generate_content(
-        model=modelo, contents=contenido,
+    r = generar(
+        cliente, modelo, contenido,
         config=types.GenerateContentConfig(system_instruction=INSTRUCCION_ALERTA,
                                            response_mime_type="application/json",
                                            response_json_schema=esquema, temperature=0.2))
@@ -400,7 +428,10 @@ def mostrar_alerta(a: dict) -> None:
     from IPython.display import HTML, display
     colores = {"Extreme": "#ea4335", "Severe": "#f9ab00", "Moderate": "#4285f4", "Minor": "#34a853"}
     c = colores.get(a.get("severidad"), "#1e1e1e")
-    pasos = "".join(f"<li>{p}</li>" for p in a.get("que_hacer", []))
+    que_hacer = a.get("que_hacer", [])
+    if isinstance(que_hacer, str):  # Gemma a veces devuelve una frase en vez de una lista
+        que_hacer = [x.strip() for x in que_hacer.replace(";", ".").split(".") if x.strip()]
+    pasos = "".join(f"<li>{p}</li>" for p in que_hacer)
     display(HTML(f"""
     <div style="max-width:380px;border:2px solid #1e1e1e;border-radius:28px;padding:20px 24px;
                 font-family:'Google Sans',system-ui,sans-serif;background:#fff;color:#1e1e1e">
