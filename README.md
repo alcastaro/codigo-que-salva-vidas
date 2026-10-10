@@ -13,42 +13,22 @@ con productos de Google Crisis Resilience y datos abiertos. La D construye una p
 | **C · Alerta** | Instrucciones de sistema, salida estructurada CAP, Gemma, app con Build | AI Studio (sirve en el móvil) | [`taller/pista_C_ai_studio.md`](taller/pista_C_ai_studio.md) |
 | **D · AlphaEarth** | Erosión en RD: cambio 2017→2025 × pendiente, clasificación con ejemplos (como Google Earth *Classify*), plataforma Gradio | Colab | [`taller/pista_D_alphaearth.ipynb`](taller/pista_D_alphaearth.ipynb) |
 
-Portal para el QR: [`index.html`](index.html) (GitHub Pages). Deck: [`deck/codigo-que-salva-vidas.pptx`](deck/codigo-que-salva-vidas.pptx).
+Portal para el QR: [`index.html`](index.html) (GitHub Pages).
 
-## Guion de los 40 minutos
+## Cómo empezar
 
-| Min | Bloque | Diapositivas |
-|---|---|---|
-| 0–1 | Portada; pedir que escaneen el QR **ya** (Colab tarda ~30 s en instalar) | 1 |
-| 1–3 | El problema, Crisis Resilience y su mapa | 2–6 |
-| 3–4 | Pilar 1 · Telemetría distribuida (sismos con Android) | 7–9 |
-| 4–10 | Pilar 2 · Flood Hub, WeatherNext, Melissa, radar, AlphaEarth, Earth Engine, Google Earth, AMW, Climate Engine (~25 s por GIF) | 10–21 |
-| 10–12 | Pilar 3 · la alerta + casos Gemma 4 Good | 22–24 |
-| 12–13 | Elegir pista + QR | 25–27 |
-| 13–37 | **Taller.** Demo guiada de 2 min por pista; dejar la diapositiva del QR en pantalla | 27 |
-| 37–40 | Evento Climate Engine del GDG + cierre | 28–29 |
+1. Abre el [portal](https://alcastaro.github.io/codigo-que-salva-vidas/) y elige una pista.
+2. Saca tu API key gratuita de Gemini en [aistudio.google.com/apikey](https://aistudio.google.com/apikey).
+3. En Colab, guárdala en la llave 🔑 (Secretos) con el nombre `GOOGLE_API_KEY` y activa *Notebook access*. Nunca la pegues en una celda.
+4. Ejecuta las celdas en orden. Las celdas pesadas traen una copia de los datos (`EN_VIVO = False`) para no depender de la red.
 
-**Plan B si cae la red:** todas las celdas pesadas tienen copia en `data/` y el interruptor `EN_VIVO` sale en `False`
-por defecto. El deck no necesita internet.
+## Qué hay en este repositorio
 
-## Antes del taller (facilitador)
-
-1. **Flood Hub** solo se muestra en vivo en el deck; no forma parte de la práctica. `tools/floodhub_extract.py` queda como herramienta opcional.
-2. **Fuentes del deck:** Google Sans y Roboto Mono (OFL). PowerPoint necesita los pesos estáticos
-   Roboto Mono Thin y Light instalados; están en `deck/fonts/`.
-3. **Prueba en Colab real** con una cuenta que no sea la tuya, desde la red del evento si es posible.
-
-## Regenerar todo
-
-```bash
-uv venv .venv && uv pip install --python .venv/bin/python -r requirements.txt
-.venv/bin/python tools/construir_notebooks.py           # notebooks desde una sola fuente
-.venv/bin/python tools/probar_notebook.py taller/pista_A_huracan.ipynb
-.venv/bin/python tools/probar_notebook.py taller/pista_B_satelite.ipynb
-.venv/bin/python tools/preparar_alphaearth.py           # copia de embeddings (lento: ~6 min)
-.venv/bin/python tools/preparar_copias_sentinel.py      # copia de Sentinel-1/2
-.venv/bin/python tools/figuras_deck.py && .venv/bin/python tools/construir_deck.py
-```
+| Carpeta | Contenido |
+|---|---|
+| `taller/` | Los notebooks de las pistas A, B y D, la guía de la pista C y el código de apoyo (`ayuda.py`, `plataforma.py`) |
+| `data/` | Copias de los datos abiertos que usan los notebooks |
+| `index.html` | El portal del taller (GitHub Pages) |
 
 ## Datos, fuentes y licencias
 

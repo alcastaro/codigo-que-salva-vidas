@@ -15,3 +15,5 @@ deck/brand/examples/
 .playwright-cli/
 *.webm
 auditoria/
+deck/
+tools/
