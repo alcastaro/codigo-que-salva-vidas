@@ -333,8 +333,13 @@ def cliente_gemini():
     try:
         from google.colab import userdata
         key = userdata.get("GOOGLE_API_KEY")
-    except Exception:
+    except ImportError:
         key = os.environ.get("GOOGLE_API_KEY")
+    except Exception as e:
+        raise RuntimeError("No encuentro tu key: crea el secreto GOOGLE_API_KEY en la llave 🔑 de Colab "
+                           "y activa 'Notebook access'.") from e
+    if not key:
+        raise RuntimeError("Falta GOOGLE_API_KEY. Sácala gratis en aistudio.google.com/apikey.")
     return genai.Client(api_key=key)
 
 
@@ -386,7 +391,7 @@ def redactar_alerta(cliente, modelo: str, datos_tecnicos: dict) -> dict:
         model=modelo, contents=contenido,
         config=types.GenerateContentConfig(system_instruction=INSTRUCCION_ALERTA,
                                            response_mime_type="application/json",
-                                           response_schema=esquema, temperature=0.2))
+                                           response_json_schema=esquema, temperature=0.2))
     return json.loads(r.text)
 
 

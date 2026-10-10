@@ -11,7 +11,7 @@ REPO = "alcastaro/codigo-que-salva-vidas"
 COLAB = f"https://colab.research.google.com/github/{REPO}/blob/main/taller"
 
 INSTALAR = f"""# Instala lo que falta en Colab y trae las funciones de apoyo del taller (~30 s)
-!pip -q install rasterio pystac-client planetary-computer google-genai
+!pip -q install -U rasterio pystac-client planetary-computer google-genai
 !wget -q -N https://raw.githubusercontent.com/{REPO}/main/taller/ayuda.py
 import ayuda, numpy as np, pandas as pd, matplotlib.pyplot as plt
 plt.rcParams.update({{"figure.dpi": 110, "font.size": 10}})
@@ -62,8 +62,7 @@ En esta pista haces tú lo que hicieron los pronosticadores:
 |---|---|---|
 | 1 | Ver los **50 escenarios** que el modelo de IA dibujó tres días antes | Weather Lab (DeepMind) |
 | 2 | Calcular la **probabilidad** de que el ojo pase cerca de un lugar | Weather Lab |
-| 3 | Ver qué **ríos** marcaban peligro de inundación | Flood Hub |
-| 4 | Convertir todo en una **alerta** que se entienda en 3 segundos | Gemini (AI Studio) |
+| 3 | Convertir todo en una **alerta** que se entienda en 3 segundos | Gemini (AI Studio) |
 
 **No necesitas saber programar.** Ejecuta cada celda con ▶️ (o `Shift + Enter`) en orden y lee el texto de arriba."""),
     code(INSTALAR),
@@ -111,34 +110,14 @@ if p["pasan_cerca"]:
     print(f"   Viento máximo típico al pasar: {p['viento_mediano_kt']:.0f} nudos ({ayuda.categoria(p['viento_mediano_kt'])})")
     print(f"   Probabilidad de que llegue como categoría 5: {p['prob_cat5']:.0%}")
     print(f"   Momento más probable: {p['llegada_mas_probable']:%d-%b %H:%M} UTC")"""),
-    md("""## Paso 3 · ¿Qué ríos se van a desbordar? (Flood Hub)
+    md("""## 🌊 Y los ríos: Flood Hub (lo vemos en la pantalla)
 
-**Flood Hub** pronostica crecidas de ríos hasta 7 días antes en más de 150 países, incluso en ríos **sin estaciones de medición**.
-Lo logra con un modelo de IA (dos redes neuronales LSTM en cadena) entrenado con datos de miles de ríos de todo el mundo.
-
-La API de Flood Hub requiere una key aprobada, así que el facilitador del taller extrajo una **copia** de lo que marcaba durante Melissa.
-Para verlo en vivo, abre [sites.research.google/floods](https://sites.research.google/floods)."""),
-    code("""try:
-    fh = ayuda.leer_floodhub()
-    est = fh["estado"]
-    print("Extraído:", fh["meta"]["extraido"], "· estado a", fh["meta"]["melissa_cutoff"])
-    print(f"{len(fh['medidores'])} puntos de pronóstico en {', '.join(fh['meta']['regiones'])}")
-    display(est.filter(regex="gaugeId|severity|forecastTrend|issuedTime").head(15))
-except Exception as e:
-    print("La copia de Flood Hub aún no está disponible en este repositorio:", e)
-    fh = None"""),
-    code("""if fh is not None and len(fh["estado"]):
-    m = fh["medidores"].merge(fh["estado"], left_on="gaugeId", right_on="gaugeId", how="left")
-    col = {"EXTREME": "#ea4335", "SEVERE": "#f9ab00", "ABOVE_NORMAL": "#4285f4", "NO_FLOODING": "#34a853"}
-    fig, ax = plt.subplots(figsize=(9, 6)); ayuda.mapa_base(ax)
-    for sev, g in m.groupby(m.get("severity", pd.Series(["?"] * len(m))).fillna("SIN_DATO")):
-        ax.scatter(g["location.longitude"], g["location.latitude"], s=25, color=col.get(sev, "#9e9e9e"),
-                   ec="#1e1e1e", lw=0.4, zorder=3, label=sev)
-    ax.plot(real.lon, real.lat, color="#1e1e1e", lw=1.5, ls="--", zorder=2, label="Melissa")
-    ax.legend(loc="lower left", fontsize=8); ax.set_title("Flood Hub durante Melissa"); plt.show()"""),
+**Flood Hub** pronostica crecidas de ríos hasta 7 días antes en más de 150 países, incluso en ríos **sin estaciones de medición**,
+con dos redes neuronales LSTM en cadena. Su API requiere una key aprobada, así que hoy lo vemos en vivo en la pantalla del facilitador.
+Ábrelo tú también: [sites.research.google/floods](https://sites.research.google/floods)."""),
     md(KEY_MD + """
 
-## Paso 4 · De los números a una alerta
+## Paso 3 · De los números a una alerta
 
 Un pronóstico excelente no salva a nadie si la persona no lo entiende. Le pasamos a **Gemini** los números de los pasos anteriores, y él redacta la alerta siguiendo reglas claras.
 La alerta lleva además tres campos del **Protocolo Común de Alertas (CAP)**: severidad, urgencia y certeza. CAP es el estándar con el que las autoridades publican alertas, y es el formato que Google usa para mostrarlas en Búsqueda y Maps."""),
@@ -154,7 +133,6 @@ datos = {
     "viento_esperado": ayuda.categoria(p["viento_mediano_kt"] or 0),
     "probabilidad_categoria_5": round(p["prob_cat5"], 2),
     "llegada_mas_probable_utc": p["llegada_mas_probable"],
-    "rios_en_alerta_flood_hub": int(fh["estado"].get("severity", pd.Series()).isin(["EXTREME", "SEVERE"]).sum()) if fh else "sin datos",
 }
 alerta = ayuda.redactar_alerta(cliente, modelo, datos)
 ayuda.mostrar_alerta(alerta)"""),
@@ -173,7 +151,7 @@ ayuda.mostrar_alerta(ayuda.redactar_alerta(cliente, modelo_gemma, datos))"""),
 
 ---
 **Fuentes y licencias.** Pronósticos: Google DeepMind Weather Lab, modelo experimental de ciclones, datos históricos con licencia CC BY 4.0. Es un pronóstico de investigación, no un producto oficial.
-Trayectoria real: NOAA / National Hurricane Center (best track AL132025). Inundaciones: Google Flood Forecasting API (uso no comercial).
+Trayectoria real: NOAA / National Hurricane Center (best track AL132025).
 Contornos: Natural Earth. **Para alertas reales, consulta siempre a tu servicio meteorológico nacional.**"""),
 ]
 
@@ -374,7 +352,7 @@ Aquí construyes tu propia versión para **República Dominicana**, enfocada en 
 Todo con datos abiertos: **no necesitas proyecto de Google Cloud ni de Earth Engine.**
 **Importante:** esto da *señales para revisar*, no diagnósticos. Un cambio en ladera puede ser erosión, una cosecha o una obra; hay que verificarlo en terreno."""),
     code(f"""# Instala lo necesario y trae el código del taller (~40 s)
-!pip -q install rasterio pystac-client planetary-computer google-genai gradio scikit-learn
+!pip -q install -U rasterio pystac-client planetary-computer google-genai gradio scikit-learn
 !wget -q -N https://raw.githubusercontent.com/{REPO}/main/taller/ayuda.py https://raw.githubusercontent.com/{REPO}/main/taller/plataforma.py
 import ayuda, plataforma as pf, numpy as np, matplotlib.pyplot as plt
 plt.rcParams.update({{"figure.dpi": 110, "font.size": 10}})

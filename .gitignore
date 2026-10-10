@@ -14,3 +14,4 @@ deck/fondos/*.html
 deck/brand/examples/
 .playwright-cli/
 *.webm
+auditoria/

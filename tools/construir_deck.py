@@ -466,7 +466,7 @@ def construir():
     ], "sites.research.google/floods · captura oct-2026",
         "Nature (2024), 'Global prediction of extreme floods in ungauged watersheds'. Un LSTM 'hindcast' lee un "
         "año de clima; otro LSTM 'forecast' toma ese estado y 7 días de pronóstico meteorológico. La API exige key "
-        "aprobada y uso no comercial: en el taller uso mi key y comparto una copia.")
+        "aprobada y uso no comercial: en el taller solo lo mostramos en vivo.")
 
     d.pantalla("WeatherNext 2", "weathernext.gif", [
         "8× más rápido",
@@ -598,7 +598,7 @@ def construir():
         "cultivos); las señales aparecen en el borde de las laderas. Código escrito desde cero para el taller.")
 
     d.portafolio("Elige tu pista", [
-        ("A · Huracán", "azul", ["Weather Lab:\n50 escenarios", "Flood Hub:\nríos en alerta", "Gemini: la alerta"]),
+        ("A · Huracán", "azul", ["Weather Lab:\n50 escenarios", "Probabilidad\nde que te toque", "Gemini: la alerta"]),
         ("B · Satélite", "verde", ["Sentinel-1 y 2\ncon STAC", "Radar: agua\nbajo las nubes", "AlphaEarth:\nexposición"]),
         ("C · Alerta", "rojo", ["AI Studio,\nsin código", "Formato CAP\ny Gemma", "Build: tu app"]),
         ("D · AlphaEarth", "amarillo", ["Erosión en RD:\ncambio y pendiente", "Clasifica con\nejemplos", "Tu plataforma\n(Gradio)"]),

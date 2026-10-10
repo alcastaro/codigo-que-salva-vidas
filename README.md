@@ -8,7 +8,7 @@ con productos de Google Crisis Resilience y datos abiertos. La D construye una p
 
 | Pista | Qué se hace | Herramienta | Dónde |
 |---|---|---|---|
-| **A · Huracán** | 50 escenarios de Weather Lab, probabilidad de paso, Flood Hub, alerta con Gemini y Gemma | Colab | [`taller/pista_A_huracan.ipynb`](taller/pista_A_huracan.ipynb) |
+| **A · Huracán** | 50 escenarios de Weather Lab, probabilidad de paso, alerta con Gemini y Gemma (Flood Hub solo se muestra) | Colab | [`taller/pista_A_huracan.ipynb`](taller/pista_A_huracan.ipynb) |
 | **B · Satélite** | Sentinel-1/2 con STAC, agua nueva por radar, AlphaEarth (búsqueda por similitud), alerta | Colab | [`taller/pista_B_satelite.ipynb`](taller/pista_B_satelite.ipynb) |
 | **C · Alerta** | Instrucciones de sistema, salida estructurada CAP, Gemma, app con Build | AI Studio (sirve en el móvil) | [`taller/pista_C_ai_studio.md`](taller/pista_C_ai_studio.md) |
 | **D · AlphaEarth** | Erosión en RD: cambio 2017→2025 × pendiente, clasificación con ejemplos (como Google Earth *Classify*), plataforma Gradio | Colab | [`taller/pista_D_alphaearth.ipynb`](taller/pista_D_alphaearth.ipynb) |
@@ -33,13 +33,7 @@ por defecto. El deck no necesita internet.
 
 ## Antes del taller (facilitador)
 
-1. **Flood Hub.** La API exige key aprobada. Guarda la tuya en `.env` (ignorado por git) como
-   `FLOODHUB_API_KEY=...` y corre:
-   ```bash
-   .venv/bin/python tools/floodhub_extract.py --probe   # comprueba que la key responde
-   .venv/bin/python tools/floodhub_extract.py           # genera data/floodhub/*.json
-   ```
-   Revisa los JSON antes de publicarlos: no deben contener la key (va en una cabecera, no en la URL).
+1. **Flood Hub** solo se muestra en vivo en el deck; no forma parte de la práctica. `tools/floodhub_extract.py` queda como herramienta opcional.
 2. **Fuentes del deck:** Google Sans y Roboto Mono (OFL). PowerPoint necesita los pesos estáticos
    Roboto Mono Thin y Light instalados; están en `deck/fonts/`.
 3. **Prueba en Colab real** con una cuenta que no sea la tuya, desde la red del evento si es posible.
