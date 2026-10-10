@@ -20,6 +20,11 @@ Las pistas A y B siguen al **huracán Melissa** (Jamaica, 28 de octubre de 2025)
 
 Si no sabes cuál elegir: **A** si te interesa el clima, **B** si te interesan los satélites, **C** si quieres salir con una app propia. Si solo tienes el teléfono, prueba el extra **D**.
 
+**¿Solo quieres ver los resultados?** Estas versiones ya están ejecutadas, con las figuras y los análisis de Gemini del ejemplo:
+[Pista A](taller/resultados/pista_A_huracan_resultados.ipynb) · [Pista B](taller/resultados/pista_B_satelite_resultados.ipynb) · [Pista C](taller/resultados/pista_C_alphaearth_resultados.ipynb).
+
+**¿Quieres analizar otro lugar?** En cada cuaderno, el formulario del lugar tiene la opción **«Mis coordenadas»**: elígela y escribe latitud y longitud (en Google Maps, clic derecho sobre el mapa).
+
 ## Paso 1 · Saca tu API key de Gemini (gratis, 2 minutos)
 
 Las pistas A, B y C usan Gemini desde Colab, y para eso necesitas una **API key**: una clave personal que identifica tus llamadas al modelo. El extra D no la necesita.
@@ -77,6 +82,7 @@ Cuando el notebook use la key por primera vez, Colab puede preguntar si le das p
 | Carpeta o archivo | Contenido |
 |---|---|
 | `taller/pista_A_huracan.ipynb`, `pista_B_satelite.ipynb`, `pista_C_alphaearth.ipynb` | Los notebooks de Colab, cada uno con todo su código |
+| `taller/resultados/` | Las mismas pistas ya ejecutadas, para leer los resultados sin correr nada |
 | `taller/pista_D_ai_studio.md` | La guía del extra D, para seguir en AI Studio |
 | `data/melissa/` | Pronósticos de Weather Lab (22, 25 y 27 de octubre de 2025) y trayectoria real del NHC |
 | `data/sentinel/black_river.npz` | Copia de las imágenes Sentinel-1 y Sentinel-2 de Black River, antes y después |
