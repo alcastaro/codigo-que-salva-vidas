@@ -9,11 +9,6 @@ pyarrow
 scipy
 matplotlib
 google-genai
-nbformat
-python-pptx
-qrcode[pil]
-pymupdf
-fonttools
-geopandas
 scikit-learn
 gradio
+jupyter
