@@ -24,6 +24,7 @@
   .escenario { position: relative; aspect-ratio: 16 / 9; background: var(--blanco); border: 2px solid var(--negro); border-radius: 20px; overflow: hidden; }
   .escenario img { position: absolute; display: block; }
   .escenario .fondo { inset: 0; width: 100%; height: 100%; }
+  .escenario img[hidden] { display: none; }
   .escenario:fullscreen { border: 0; border-radius: 0; background: var(--negro); }
   .escenario:fullscreen .lienzo { position: absolute; inset: 0; margin: auto; width: min(100vw, calc(100vh * 16 / 9)); aspect-ratio: 16 / 9; }
   .lienzo { position: absolute; inset: 0; }
