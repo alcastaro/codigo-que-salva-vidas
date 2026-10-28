@@ -1,0 +1,120 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Código que salva vidas · Presentación</title>
+<meta name="description" content="Presentación del taller Código que salva vidas, DevFest Santo Domingo 2026, con sus animaciones.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Google+Sans:wght@400;500;700&family=Roboto+Mono:wght@300&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --negro: #1e1e1e; --blanco: #ffffff; --off: #f0f0f0; --p-azul: #c3ecf6;
+    --sans: "Google Sans", system-ui, sans-serif; --mono: "Roboto Mono", ui-monospace, monospace;
+  }
+  * { box-sizing: border-box; }
+  body { margin: 0; background: var(--off); color: var(--negro); font-family: var(--sans); line-height: 1.4; }
+  main { max-width: 1240px; margin: 0 auto; padding: 24px 16px 48px; }
+  header { display: flex; flex-wrap: wrap; gap: 12px 20px; align-items: center; justify-content: space-between; margin-bottom: 20px; }
+  h1 { font-size: clamp(28px, 4vw, 40px); margin: 0; font-weight: 700; }
+  .acciones { display: flex; flex-wrap: wrap; gap: 10px; }
+  .boton { display: inline-block; text-decoration: none; color: var(--negro); background: var(--blanco); border: 2px solid var(--negro);
+           border-radius: 999px; padding: 8px 18px; font: 500 16px var(--sans); cursor: pointer; }
+  .boton:hover, .boton:focus-visible { background: var(--negro); color: var(--blanco); outline: none; }
+  .escenario { position: relative; aspect-ratio: 16 / 9; background: var(--blanco); border: 2px solid var(--negro); border-radius: 20px; overflow: hidden; }
+  .escenario img { position: absolute; display: block; }
+  .escenario .fondo { inset: 0; width: 100%; height: 100%; }
+  .escenario:fullscreen { border: 0; border-radius: 0; background: var(--negro); }
+  .escenario:fullscreen .lienzo { position: absolute; inset: 0; margin: auto; width: min(100vw, calc(100vh * 16 / 9)); aspect-ratio: 16 / 9; }
+  .lienzo { position: absolute; inset: 0; }
+  .controles { display: flex; align-items: center; justify-content: space-between; gap: 12px; margin-top: 16px; }
+  .contador { font: 300 16px var(--mono); }
+  .ayuda { font: 300 13px var(--mono); margin-top: 24px; }
+  a { color: var(--negro); }
+  @media (max-width: 600px) {
+    .boton { padding: 6px 14px; font-size: 15px; }
+    #pantalla { display: none; }
+    .escenario { border-radius: 12px; }
+  }
+</style>
+</head>
+<body>
+<main>
+  <header>
+    <h1>Código que salva vidas</h1>
+    <div class="acciones">
+      <a class="boton" href="codigo-que-salva-vidas.pptx" download>Descargar PPTX</a>
+      <a class="boton" href="codigo-que-salva-vidas.pdf">Descargar PDF</a>
+      <a class="boton" href="../">Portal del taller</a>
+    </div>
+  </header>
+  <div class="escenario" id="escenario" tabindex="0" aria-roledescription="carrusel" aria-label="Diapositivas">
+    <div class="lienzo" id="lienzo">
+      <img class="fondo" id="fondo" alt="">
+      <img id="anim" alt="" hidden>
+    </div>
+  </div>
+  <div class="controles">
+    <button class="boton" id="prev" type="button" aria-label="Diapositiva anterior">← Anterior</button>
+    <span class="contador" id="contador" aria-live="polite"></span>
+    <button class="boton" id="pantalla" type="button">Pantalla completa</button>
+    <button class="boton" id="next" type="button" aria-label="Diapositiva siguiente">Siguiente →</button>
+  </div>
+  <p class="ayuda">Flechas del teclado o deslizar para avanzar · F para pantalla completa · DevFest Santo Domingo 2026 · Alberto Castillo Aroca</p>
+</main>
+<script>
+const SLIDES = [{"alt": "Código que salva vidas · Alberto Castillo Aroca Tech Lead en contextos de crisis", "gif": null}, {"alt": "Escanea y elige tu pista · github.com/alcastaro/codigo-que-salva-vidas", "gif": null}, {"alt": "Alberto Castillo Aroca · Dominicano, colombiano y venezolano Economista, bioinformático y científico de datos Gestión de información en crisis humanitarias IA para emergencias, también sin internet", "gif": null}, {"alt": "Colombia: migración, inundaciones y pandemia · Atención a migrantes venezolanos · La Mojana · inundaciones en Colombia · Amazonía – Perú, Brasil y Colombia", "gif": null}, {"alt": "En una crisis no solo faltan datos, también sobra ruido, y lo que se sabe no llega a quien lo necesita.", "gif": null}, {"alt": "¿Qué es la teledetección? · Remote sensing · Medir la Tierra sin tocarla Pasiva: la luz del sol que rebota (óptico) Activa: emite su señal y mide el eco (radar) Resolución: píxel, revisita y bandas", "gif": null}, {"alt": "Cómo funciona un satélite de observación", "gif": null}, {"alt": "Reflectancia: cada superficie tiene su firma · Reflectancia: % de luz que rebota Vegetación: absorbe rojo, refleja infrarrojo Agua: casi nada en infrarrojo Suelo: sube poco a poco · Curvas típicas aproximadas · figura propia", "gif": null}, {"alt": "Los satélites abiertos más usados · Landsat (NASA/USGS) · Desde 1972: 50+ años de archivo · Óptico y térmico 30 m por píxel · Landsat 8 y 9: cada 8 días · Sentinel-2 (ESA) · Óptico, 13 bandas · 10 m en visible e infrarrojo cercano · Cada ~5", "gif": null}, {"alt": "Así escanea la Tierra Sentinel-2 · Órbita polar, de polo a polo Franjas de 290 km de ancho La Tierra gira debajo Toda la Tierra en ~5 días · Animación: ESA · vía Airbus (airbus.com, ago-2024) · acelerada", "gif": [3.854, 19.259, 58.333, 58.451, 0.05702, 0.00208]}, {"alt": "Bandas: cada una mide un tipo de luz · Azul · ~490 nm Agua, costas, bruma · Verde · ~560 nm Vegetación, agua turbia · Rojo · ~665 nm La clorofila la absorbe · IR cercano · ~840 nm Las plantas sanas lo reflejan mucho · IR onda corta · 1.600–", "gif": null}, {"alt": "Índices: operaciones entre bandas · NDVI · vegetación · (NIR − Rojo) ÷ (NIR + Rojo) · > 0,5: vegetación sana y densa · Cultivos, sequía, daño de huracán · NDWI · agua · (Verde − NIR) ÷ (Verde + NIR) · > 0: agua · Inundaciones, embalses · NB", "gif": null}, {"alt": "crisisresilience.google · Incendios Inundaciones Sismos Ciclones y clima Alertas en 90+ países · crisisresilience.google · captura oct-2026", "gif": [3.854, 19.259, 64.583, 64.583, 0.05161, 0.00208]}, {"alt": "Google Crisis Resilience: el mapa · Sismos · Android Earthquake Alerts · Red de acelerómetros en teléfonos · Alertas en 98 países · Inundaciones · Flood Hub · Flood Forecasting API · 150+ países, ríos sin estaciones · Ciclones y clima · Wea", "gif": null}, {"alt": "Las capas que lo sostienen todo · Observar · AlphaEarth Foundations · Earth Engine y Google Earth · Sentinel / Landsat (datos abiertos) · Predecir · Modelos LSTM (Flood Hub) · WeatherNext 2 · Earth AI (Gemini) · Avisar · SOS Alerts · Public", "gif": null}, {"alt": "01 · Telemetría distribuida · Millones de teléfonos funcionando como sismógrafos", "gif": null}, {"alt": "Android Earthquake Alerts: cómo funciona · Sensor · El acelerómetro siente la sacudida · Teléfono · Un algoritmo local decide si es sismo · Señal · Envía solo hora y zona aproximada · Servidor · Une miles de señales: epicentro y magnitud · ", "gif": null}, {"alt": "recibió la alerta · 36 % · antes de sentir la sacudida", "gif": null}, {"alt": "02 · Modelado predictivo · Del satélite y la lluvia, al río y al huracán", "gif": null}, {"alt": "Flood Hub: ríos que avisan · Dos redes LSTM: pasado y pronóstico Ríos sin estaciones de medición Hasta 7 días antes API con lista de espera · sites.research.google/floods · captura oct-2026", "gif": [3.854, 19.259, 64.583, 64.583, 0.05161, 0.00208]}, {"alt": "Flood Hub pronostica en · 150+ · países con pronóstico", "gif": null}, {"alt": "WeatherNext 3 · 8× más rápido Mejor en 99,9 % de variables Hasta 15 días, por hora En Earth Engine, BigQuery y Vertex AI · deepmind.google/science/weathernext · captura oct-2026", "gif": [3.854, 19.259, 64.583, 54.856, 0.06076, 0.00208]}, {"alt": "Melissa: 50 futuros posibles · Weather Lab, emitido el 25-oct Azul: escenarios del modelo Rojo: lo que pasó (NHC) Esto lo haces en la Pista A · Weather Lab (CC BY 4.0) · NOAA/NHC · Natural Earth · animación propia", "gif": [3.854, 19.259, 64.583, 71.759, 0.04645, 0.00208]}, {"alt": "Cinco días antes: · 80 % · de confianza en categoría 5", "gif": null}, {"alt": "Sentinel-1: el radar ve bajo las nubes · Atraviesa nubes, de día y de noche Agua quieta = oscuro Antes 17-oct · después 29-oct Datos abiertos (Copernicus) · Copernicus Sentinel-1 (ESA) · Microsoft Planetary Computer · animación propia", "gif": [3.854, 19.259, 40.625, 72.222, 0.04615, 0.00208]}, {"alt": "NASA FIRMS: incendios activos, casi en vivo · Todo el planeta, cada pocas horas Satélites VIIRS (375 m) y MODIS (1 km) Mapa, alertas por correo y API gratis Ojo: puntos de calor, no confirmaciones · firms.modaps.eosdis.nasa.gov · NASA LANCE", "gif": null}, {"alt": "AlphaEarth Foundations · 64 números por píxel Busca sin entrenar Anual, 2017–2025 Abierto y gratuito · AlphaEarth Foundations (CC BY 4.0) · Source Cooperative", "gif": null}, {"alt": "AlphaEarth: Constanza, 2017 → 2025 · Un color por tipo de terreno Derecha: cuánto cambió Cultivos en laderas Esto lo haces en la Pista C · AlphaEarth Foundations (CC BY 4.0) vía Source Cooperative · animación propia", "gif": [3.854, 19.259, 64.583, 59.704, 0.05583, 0.00208]}, {"alt": "Earth Engine: 40 años de Santo Domingo · Petabytes de satélite y clima Análisis en la nube, en minutos Gratis para uso no comercial Base de Timelapse y Climate Engine · earthengine.google.com/timelapse · captura oct-2026", "gif": [3.854, 19.259, 63.725, 72.222, 0.04615, 0.00208]}, {"alt": "Novedades de Google Earth · Earth AI: imagen, población y entorno Gemini razona sobre el mapa Classify: cultivos con AlphaEarth Pro y AI Pro, primero en EE. UU. · earth.google.com · captura oct-2026", "gif": [3.854, 19.259, 64.583, 59.959, 0.05559, 0.00208]}, {"alt": "Amazon Mining Watch · Minería de oro en 9 países Redes neuronales sobre Sentinel-2 99 % especificidad, 90 % sensibilidad Datos abiertos, cada trimestre · amazonminingwatch.org (Earth Genome y aliados) · captura oct-2026", "gif": [3.854, 19.259, 64.583, 64.583, 0.05161, 0.00208]}, {"alt": "Climate Engine · Clima y satélite sin código Corre sobre Earth Engine Sequía, incendios y cultivos Web, API e informes · climateengine.org · captura oct-2026", "gif": null}, {"alt": "03 · Despliegue a escala · Cuando la infraestructura física colapsa", "gif": null}, {"alt": "La última milla: la alerta · SOS Alerts en Search y Maps Alertas oficiales con estándar CAP Límites de incendio cada 10–15 min Si no se entiende en 3 s, no sirve", "gif": null}, {"alt": "La comunidad también construye: Gemma 4 Good · Acuífero·Vigía · Alerta de inundación sin internet · Gemma 4 E2B en Raspberry Pi 5 · Sudamérica · Global Resilience · PreVillage · Servicios públicos por WhatsApp · Gemma 4 E4B en Raspberry Pi ", "gif": null}, {"alt": "04 · Manos a la obra · Elige tu pista: huracán, satélite o AlphaEarth", "gif": null}, {"alt": "Pista C: tu plataforma satelital · Cambio 2017→2025 con AlphaEarth × pendiente Copernicus Clic para dar ejemplos Enlace público con Gradio · Plataforma del taller (Gradio en Colab) · Constanza, RD", "gif": [3.854, 19.259, 64.583, 64.583, 0.05161, 0.00208]}, {"alt": "Elige tu pista · A · Huracán · Weather Lab: 50 escenarios · Probabilidad de que te toque · Gemini: la alerta · B · Satélite · Sentinel-1 y 2 con STAC · Radar: agua bajo las nubes · AlphaEarth: exposición · C · AlphaEarth · Erosión en RD: ca", "gif": null}, {"alt": "Escanea y elige tu pista · github.com/alcastaro/codigo-que-salva-vidas", "gif": null}, {"alt": "Próximamente en el GDG Santo Domingo: un taller de Climate Engine para analizar clima y satélite sin código. · gdg.community.dev/gdg-santo-domingo", "gif": null}, {"alt": "Llévatelo a casa · Notebooks y datos en el repo del QR Datos abiertos, con su licencia citada Alertas reales: tu servicio meteorológico ¿Construyes algo? Cuéntaselo al GDG", "gif": null}, {"alt": "Encuéntrame · LinkedIn · linkedin.com/in/alcastaro · Instagram · @alcastaro", "gif": null}, {"alt": "Gracias · Alberto Castillo Aroca github.com/alcastaro/codigo-que-salva-vidas", "gif": null}];
+const pad = n => String(n).padStart(2, "0");
+const fondo = document.getElementById("fondo"), anim = document.getElementById("anim");
+const contador = document.getElementById("contador"), escenario = document.getElementById("escenario");
+let i = 0;
+function mostrar(n) {
+  i = Math.max(0, Math.min(SLIDES.length - 1, n));
+  const s = SLIDES[i];
+  fondo.src = "diapositivas/" + pad(i + 1) + ".jpg";
+  fondo.alt = s.alt;
+  if (s.gif) {
+    const [x, y, w, h, radio, linea] = s.gif;
+    // The deck draws each GIF as a rounded picture with an ink outline; both scale with the slide.
+    const ancho = document.getElementById("lienzo").clientWidth;
+    const lado = Math.min(w / 100 * ancho, h / 100 * ancho * 9 / 16);
+    Object.assign(anim.style, { left: x + "%", top: y + "%", width: w + "%", height: h + "%",
+      borderRadius: radio * lado + "px", border: linea ? linea * ancho + "px solid var(--negro)" : "0", boxSizing: "border-box" });
+    anim.src = "animaciones/" + pad(i + 1) + ".gif";
+    anim.hidden = false;
+  } else {
+    anim.hidden = true;
+    anim.removeAttribute("src");
+  }
+  contador.textContent = (i + 1) + " / " + SLIDES.length;
+  history.replaceState(null, "", "#" + (i + 1));
+  if (i + 1 < SLIDES.length) new Image().src = "diapositivas/" + pad(i + 2) + ".jpg";
+}
+function pantalla() {
+  if (document.fullscreenElement) document.exitFullscreen();
+  else escenario.requestFullscreen && escenario.requestFullscreen();
+}
+document.getElementById("prev").onclick = () => mostrar(i - 1);
+document.getElementById("next").onclick = () => mostrar(i + 1);
+document.getElementById("pantalla").onclick = pantalla;
+document.addEventListener("keydown", e => {
+  if (["ArrowRight", "PageDown", " "].includes(e.key)) { e.preventDefault(); mostrar(i + 1); }
+  else if (["ArrowLeft", "PageUp"].includes(e.key)) { e.preventDefault(); mostrar(i - 1); }
+  else if (e.key === "Home") mostrar(0);
+  else if (e.key === "End") mostrar(SLIDES.length - 1);
+  else if (e.key === "f" || e.key === "F") pantalla();
+});
+let x0 = null;
+escenario.addEventListener("touchstart", e => { x0 = e.touches[0].clientX; }, { passive: true });
+escenario.addEventListener("touchend", e => {
+  if (x0 === null) return;
+  const dx = e.changedTouches[0].clientX - x0; x0 = null;
+  if (Math.abs(dx) > 40) mostrar(i + (dx < 0 ? 1 : -1));
+});
+escenario.addEventListener("click", e => { if (!e.target.closest("button")) mostrar(i + 1); });
+window.addEventListener("resize", () => mostrar(i));
+document.addEventListener("fullscreenchange", () => mostrar(i));
+mostrar((parseInt(location.hash.slice(1), 10) || 1) - 1);
+</script>
+</body>
+</html>

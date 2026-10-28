@@ -9,6 +9,8 @@ Las pistas A y B siguen al **huracán Melissa** (Jamaica, 28 de octubre de 2025)
 
 👉 **Portal del taller:** <https://alcastaro.github.io/codigo-que-salva-vidas/>
 
+🎞️ **Presentación, con sus animaciones:** <https://alcastaro.github.io/codigo-que-salva-vidas/presentacion/> · descarga en [PPTX](presentacion/codigo-que-salva-vidas.pptx) o [PDF](presentacion/codigo-que-salva-vidas.pdf)
+
 ## Elige una pista
 
 | Pista | Qué haces | Dónde | Abrir |
